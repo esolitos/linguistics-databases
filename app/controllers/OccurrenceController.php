@@ -9,7 +9,7 @@ class OccurrenceController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+    return View::make('DoubleObject.Occurrence.listing', $this->view_data);
 	}
 
 	/**
@@ -19,7 +19,7 @@ class OccurrenceController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+    return View::make('DoubleObject.Occurrence.create', $this->view_data);
 	}
 
 	/**
@@ -29,7 +29,18 @@ class OccurrenceController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+    $occurrence = new Occurrence();
+    
+    if ( $occurrence->save() ) {
+      if ( stristr( 'continue', Input::get('submit')) ) {
+        return Redirect::back()->with('messages', ['Occurrence inserted successfully.']);
+      } else {
+        return Redirect::back()->with('messages', ['I should now continue to the next point... But I am lazy']);
+      }
+      
+    } else {
+      return Redirect::back()->withInput()->withErrors( $occurrence->errors() );
+    }
 	}
 
 	/**
@@ -51,7 +62,9 @@ class OccurrenceController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+    $this->view_data['occurrence'] = Occurrence::find($id);
+    
+    return View::make('DoubleObject.Occurrence.edit', $this->view_data);
 	}
 
 	/**
@@ -62,7 +75,14 @@ class OccurrenceController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+    $occurrence = Occurrence::find($id);
+    $occurrence->forceEntityHydrationFromInput = true;
+    
+    if ( $occurrence->save() ) {
+      return Redirect::back()->with('messages', ['Occurrence updated successfully.']);
+    } else {
+      return Redirect::back()->withInput()->withErrors( $occurrence->errors() );
+    }
 	}
 
 	/**
@@ -73,7 +93,9 @@ class OccurrenceController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		Occurrence::destroy($id);
+
+    return Redirect::back();
 	}
 
 }

@@ -16,12 +16,14 @@ class CreateOccurrenceTable extends Migration {
 			$table->increments('id');
 			$table->integer('category')->unsigned();
 			$table->text('text');
-			$table->string('corpus_file', 100);
-			$table->integer('corpus_row')->unsigned();
-			$table->string('keyword', 50);
 			$table->string('verb', 50);
+			$table->string('keyword', 50);
 			$table->enum('speaker', array('A', 'C'));
 			
+			$table->string('corpus_file', 100);
+			$table->integer('corpus_row')->unsigned();
+			
+      
 			$table->index('category');
 			$table->index('corpus_file');
 			
