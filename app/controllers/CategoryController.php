@@ -121,7 +121,14 @@ class CategoryController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+    $category = OccurrenceCategory::find($id);
+    $category->forceEntityHydrationFromInput = true;
+    
+    if ( $category->save() ) {
+      return Redirect::back()->with('messages', ['Category updated successfully.']);
+    } else {
+      return Redirect::back()->withInput()->withErrors( $category->errors() );
+    }
 	}
 
 	/**
@@ -135,7 +142,7 @@ class CategoryController extends \BaseController {
 	{
 		OccurrenceCategory::destroy($id);
 
-    return Redirect::action('CategoryController@index');
+    return Redirect::back();
 	}
 
 }

@@ -18,6 +18,9 @@ class OccurrenceCategory extends Ardent {
     'first_object' => 'required|exists:category_objects,id|unique_with:occurrence_category,second_object',
     'second_object' => 'exists:category_objects,id',
   );
+  public static $relationsData = array(
+    'occurrences' => [self::HAS_MANY, 'Occurrence', 'otherKey'=>'category'],
+  );
   public static $customMessages = array(
     'unique_with' => 'This combination of those two objects already exists.',
   );

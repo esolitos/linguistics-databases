@@ -4,7 +4,7 @@
 	<p>Database of duble object structures in Croatian</p>
 
 	<h3>Create new Category</h3>
-  {{ Form::open(array('action' => 'CategoryController@store')) }}
+  {{ Form::open(array('action' => ['CategoryController@update', $category->id], 'method' => 'PATCH')) }}
   @if( $errors->any() )
     {{ var_dump($errors) }}
   @endif
