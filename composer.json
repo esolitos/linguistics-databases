@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.1.*",
         "laravelbook/ardent": "2.4.*",
-        "felixkiss/uniquewith-validator": "1.0.*"
+        "felixkiss/uniquewith-validator": "1.0.*",
+        "vespakoen/menu": "2.0.*"
 	},
     "require-dev": {
         "way/generators": "2.*",
