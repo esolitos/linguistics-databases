@@ -11,6 +11,26 @@ class BaseController extends Controller {
 		$this->view_data['messages'] = new Messages( [ 'general' => Session::get('messages', []) ] );
 		
 		$this->view_data['body_attributes'] = [];
+
+    Menu::handler('top-menu-right', array('class' => 'right'));
+    Menu::handler('top-menu-left', array('class' => 'left'));
+    
+    Form::macro('form_checkbox', function($name, $value, $label, $checked = null, $options = array())
+    {
+      $id = $name;
+      if ( empty($options['id']) ) {
+        $options['id'] = $name;
+      }
+      
+      return '<label for="'.$id.'">'.Form::checkbox($name, $value, $checked, $options).$label.'</label>';
+    });
+    Form::macro('field_error', function($field, $errors){
+        if($errors->has($field)){
+            $msg = $errors->first($field);
+            return "<span class=\"error\">$msg</span>";
+        }
+        return '';
+    });
 	}
 	
 	/**
