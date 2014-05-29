@@ -1,6 +1,6 @@
 <?php
 
-class OccurrenceController extends \BaseController {
+class OccurrenceController extends \DoubleObjectController {
 
 	/**
 	 * Display a listing of the resource.

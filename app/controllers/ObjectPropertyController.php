@@ -1,6 +1,6 @@
 <?php
 
-class ObjectPropertyController extends \BaseController {
+class ObjectPropertyController extends \DoubleObjectController {
 
 	/**
 	 * Display a listing of the resource.
