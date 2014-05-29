@@ -13,8 +13,8 @@ class OccurrenceCategoryTableSeeder extends Seeder {
 		{
 			DB::table("occurrence_category")->insert([
 				'id' => $index,
-				'first_object' => $faker->randomNumber(1, 10),
-				'second_object' => $faker->randomNumber(1, 10),
+				'first_object_id' => $faker->randomNumber(1, 10),
+				'second_object_id' => $faker->randomNumber(1, 10),
 			]);
 		}
 	}

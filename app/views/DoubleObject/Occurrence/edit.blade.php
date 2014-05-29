@@ -5,13 +5,10 @@
 
 	<h3>Edit Occurrence: {{ $occurrence->id }}</h3>
   {{ Form::open(array('action' => ['OccurrenceController@update', $occurrence->id], 'method' => 'PATCH')) }}
-  @if( $errors->any() )
-    {{ var_dump($errors) }}
-  @endif
 
-  {{ Form::field_error('category', $errors) }}
-  {{ Form::label('category', 'Occurrence Category'); }}
-  {{ Form::select('category', OccurrenceCategory::allForSelect(), $occurrence->category) }}
+  {{ Form::field_error('category_id', $errors) }}
+  {{ Form::label('category_id', 'Occurrence Category'); }}
+  {{ Form::select('category_id', OccurrenceCategory::allForSelect(), $occurrence->category_id) }}
 
   {{ Form::field_error('text', $errors) }}
   {{ Form::label('text', 'Text'); }}

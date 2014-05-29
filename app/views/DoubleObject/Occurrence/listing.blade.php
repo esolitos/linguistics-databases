@@ -15,7 +15,7 @@
 <div class="listing">
   @foreach(OccurrenceCategory::allForSelect() as $cat_id => $category)
     <h4 id="category-{{ $cat_id }}">{{ $category }}</h4>
-    @if( Occurrence::where('category', '=', $cat_id)->count() )
+    @if( Occurrence::where('category_id', '=', $cat_id)->count() )
       <table border="0" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        @foreach(Occurrence::where('category', '=', $cat_id)->get() as $occ)
+        @foreach(Occurrence::where('category_id', '=', $cat_id)->get() as $occ)
         <tr>
           <td>{{ $occ->id }}</td>
           <td>{{ $occ->text }}</td>

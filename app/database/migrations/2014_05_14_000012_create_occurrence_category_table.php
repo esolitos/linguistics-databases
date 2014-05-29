@@ -5,43 +5,49 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateOccurrenceCategoryTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('occurrence_category', function(Blueprint $table) {
-			$table->increments('id');
-			$table->integer('first_object')->unsigned();
-			$table->integer('second_object')->unsigned()->nullable();
-			
-			$table->unique( array('first_object', 'second_object') );
-			
-			$table->foreign('first_object')->references('id')->on('category_objects')
-				->onDelete('restrict')->onUpdate('cascade');
-			
-			$table->foreign('second_object')->references('id')->on('category_objects')
-				->onDelete('restrict')->onUpdate('cascade');
-		});
-		
-	}
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('occurrence_category', function(Blueprint $table) {
+      $table->increments('id');
+      $table->integer('first_object_id')->unsigned();
+      $table->integer('second_object_id')->unsigned()->nullable();
 
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::table('occurrence_category', function(Blueprint $table) {
-			$table->dropForeign('occurrence_category_first_object_foreign');
-			$table->dropForeign('occurrence_category_second_object_foreign');
-		});
+      $table->unique( array('first_object_id', 'second_object_id') );
+
+
+      $table->foreign('first_object_id', 'fir_obj_id_foreign')
+        ->references('id')->on('category_objects')
+        ->onDelete('restrict')->onUpdate('cascade');
+
+      $table->foreign('second_object_id', 'sec_obj_id_foreign')
+        ->references('id')->on('category_objects')
+        ->onDelete('restrict')->onUpdate('cascade');
+      
+      $table->softDeletes();
+    });
 		
-		Schema::drop('occurrence_category');
-	}
+  }
+
+
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::table('occurrence_category', function(Blueprint $table) {
+      $table->dropForeign('fir_obj_id_foreign');
+      $table->dropForeign('sec_obj_id_foreign');
+    });
+
+    Schema::drop('occurrence_category');
+  }
 
 }

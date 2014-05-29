@@ -5,30 +5,33 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateObjectPropertyTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('object_property', function(Blueprint $table) {
-			$table->increments('id');
-			$table->string('name', 20);
-			
-			$table->unique('name');
-		});
-	}
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('object_property', function(Blueprint $table) {
+      $table->increments('id');
+      $table->string('name', 20);
 
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('object_property');
-	}
+      $table->unique('name');
+
+      $table->softDeletes();
+    });
+  }
+
+
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::drop('object_property');
+  }
 
 }

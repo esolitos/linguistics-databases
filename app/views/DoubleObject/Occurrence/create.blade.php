@@ -5,13 +5,10 @@
 
 	<h3>Create new Occurrence</h3>
   {{ Form::open(array('action' => 'OccurrenceController@store')) }}
-  @if( $errors->any() )
-    {{ var_dump($errors) }}
-  @endif
 
-  {{ Form::field_error('category', $errors) }}
-  {{ Form::label('category', 'Occurrence Category'); }}
-  {{ Form::select('category', OccurrenceCategory::allForSelect([''=>"-Select One-"])) }}
+  {{ Form::field_error('category_id', $errors) }}
+  {{ Form::label('category_id', 'Occurrence Category'); }}
+  {{ Form::select('category_id', OccurrenceCategory::allForSelect([''=>"-Select One-"])) }}
 
   {{ Form::field_error('text', $errors) }}
   {{ Form::label('text', 'Text'); }}

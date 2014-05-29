@@ -32,10 +32,12 @@ class OccurrenceController extends \DoubleObjectController {
     $occurrence = new Occurrence();
     
     if ( $occurrence->save() ) {
-      if ( stristr( 'continue', Input::get('submit')) ) {
-        return Redirect::back()->with('messages', ['Occurrence inserted successfully.']);
+      
+      if ( str_contains(Input::get('submit'), 'continue') ) {
+        return Redirect::back()->withMessages(['Occurrence inserted successfully.']);
+        
       } else {
-        return Redirect::back()->with('messages', ['I should now continue to the next point... But I am lazy']);
+        return Redirect::back()->withMessages(['I should now continue to the next point... But I am lazy']);
       }
       
     } else {
@@ -79,7 +81,7 @@ class OccurrenceController extends \DoubleObjectController {
     $occurrence->forceEntityHydrationFromInput = true;
     
     if ( $occurrence->save() ) {
-      return Redirect::back()->with('messages', ['Occurrence updated successfully.']);
+      return Redirect::back()->withMessages(['Occurrence updated successfully.']);
     } else {
       return Redirect::back()->withInput()->withErrors( $occurrence->errors() );
     }
@@ -95,7 +97,20 @@ class OccurrenceController extends \DoubleObjectController {
 	{
 		Occurrence::destroy($id);
 
-    return Redirect::back();
+    return Redirect::back()->withMessages(['Selected occurrence has been deleted.']);
 	}
+
+
+  public function defineObjectProperties($id)
+  {
+    $this->view_data['occurrence'] = Occurrence::find($id);
+    
+    return View::make('DoubleObject.Occurrence.properties', $this->view_data);
+  }
+  
+  public function storeObjectProperties($id)
+  {
+    # code...
+  }
 
 }

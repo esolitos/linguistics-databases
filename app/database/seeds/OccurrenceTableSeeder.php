@@ -13,13 +13,13 @@ class OccurrenceTableSeeder extends Seeder {
 		{
 			DB::table("occurrence")->insert([
 				'id' => $index,
-				'category' => $faker->randomNumber(1, 5),
+				'category_id' => $faker->randomNumber(1, 5),
 				'text' => $faker->sentence(),
-				'corpus_file' => $faker->word(),
-				'corpus_row' => $faker->randomNumber(1,2000),
 				'keyword' => $faker->word(),
 				'verb' => $faker->word(),
-				'speaker' => $faker->randomElement( ['A', 'C'] )
+				'speaker' => $faker->randomElement( ['A', 'C'] ),
+				'corpus_file' => $faker->word(),
+				'corpus_row' => $faker->randomNumber(1,2000),
 			]);
 		}
 	}

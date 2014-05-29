@@ -6,7 +6,7 @@ class OccurrenceCategory extends Ardent {
   public $timestamps = FALSE;
   
   protected $hidden = [];
-  protected $fillable = ['first_object', 'second_object'];
+  protected $fillable = ['first_object_id', 'second_object_id'];
   protected $guarded = ['id'];
   protected $attributes = [];
   /**
@@ -15,8 +15,8 @@ class OccurrenceCategory extends Ardent {
   public $autoHydrateEntityFromInput = true;
   public $autoPurgeRedundantAttributes = true;
   public static $rules = array(
-    'first_object' => 'required|exists:category_objects,id|unique_with:occurrence_category,second_object',
-    'second_object' => 'exists:category_objects,id',
+    'first_object_id' => 'required|exists:category_objects,id|unique_with:occurrence_category,second_object_id',
+    'second_object_id' => 'exists:category_objects,id',
   );
   public static $relationsData = array(
     'occurrences' => [self::HAS_MANY, 'Occurrence', 'otherKey'=>'category'],
@@ -47,11 +47,11 @@ class OccurrenceCategory extends Ardent {
   
   public function firstObj()
   {
-    return $this->belongsTo('CategoryObject', 'first_object', 'id');
+    return $this->belongsTo('CategoryObject', 'first_object_id', 'id');
   }
   
   public function secondObj()
   {
-    return $this->belongsTo('CategoryObject', 'second_object', 'id');
+    return $this->belongsTo('CategoryObject', 'second_object_id', 'id');
   }
 }

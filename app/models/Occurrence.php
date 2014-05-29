@@ -7,7 +7,7 @@ class Occurrence extends Ardent {
   public $timestamps = false;
   
   protected $hidden = [];
-  protected $fillable = ['category', 'text', 'verb', 'keyword', 'speaker', 'corpus_file', 'corpus_row'];
+  protected $fillable = ['category_id', 'text', 'verb', 'keyword', 'speaker', 'corpus_file', 'corpus_row'];
   protected $guarded = ['id'];
   protected $attributes = [];
   /**
@@ -16,7 +16,7 @@ class Occurrence extends Ardent {
   public $autoHydrateEntityFromInput = true;
   public $autoPurgeRedundantAttributes = true;
   public static $rules = array(
-    'category'  => 'required|exists:occurrence_category,id',
+    'category_id'  => 'required|exists:occurrence_category,id',
     'text'      => 'required',
     'verb'      => 'required|max:50',
     'keyword'   => 'required|max:50',
@@ -25,7 +25,7 @@ class Occurrence extends Ardent {
     'corpus_row'  => 'required|integer|min:1',
   );
   public static $relationsData = array(
-    'category' => [self::BELONGS_TO, 'OccurrenceCategory', 'foreignKey'=>'category'],
+    'category' => [self::BELONGS_TO, 'OccurrenceCategory', 'foreignKey'=>'category_id'],
   );
   
   

@@ -9,14 +9,14 @@
     {{ var_dump($errors) }}
   @endif
 
-  {{ Form::field_error('first_object', $errors) }}
-  {{ Form::label('first_object', 'Select first Object'); }}
-  {{ Form::select('first_object', CategoryObject::allForSelect(), $category->first_object) }}
+  {{ Form::field_error('first_object_id', $errors) }}
+  {{ Form::label('first_object_id', 'Select first Object'); }}
+  {{ Form::select('first_object_id', CategoryObject::allForSelect(), $category->first_object_id) }}
   
   <hr>
-  {{ Form::field_error('second_object', $errors) }}
-  {{ Form::label('second_object', 'Select second Object'); }}
-  {{ Form::select('second_object', CategoryObject::allForSelect(['none'=>"None"]), $category->second_object ) }}
+  {{ Form::field_error('second_object_id', $errors) }}
+  {{ Form::label('second_object_id', 'Select second Object'); }}
+  {{ Form::select('second_object_id', CategoryObject::allForSelect(['none'=>"None"]), $category->second_object_id ) }}
 
   
   {{ Form::submit('Create &rarr;') }}

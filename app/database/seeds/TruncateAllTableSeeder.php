@@ -7,7 +7,6 @@ class TruncateAllTableSeeder extends Seeder {
 
 	public function run()
 	{
-		DB::table("user")->truncate();
 		
 		DB::table("occurrence_object_property")->truncate();
 		DB::table("occurrence")->truncate();

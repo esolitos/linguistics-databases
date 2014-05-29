@@ -12,9 +12,9 @@ class OccurrenceObjectPropertyTableSeeder extends Seeder {
 		foreach(range(1, 36) as $index)
 		{
 			DB::table("occurrence_object_property")->insert([
-				'occurrence' => (int) $index/2,
+				'occurrence_id' => (int) $index/2,
 				'type' => ($index %2) ? 'IND' : 'DIR',
-				'property' => $faker->randomNumber(1,20)
+				'property_id' => $faker->randomNumber(1,20)
 			]);
 		}
 	}

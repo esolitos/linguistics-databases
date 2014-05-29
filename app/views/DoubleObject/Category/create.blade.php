@@ -5,13 +5,10 @@
 
 	<h3>Create new Category</h3>
   {{ Form::open(array('action' => 'CategoryController@store')) }}
-  @if( $errors->any() )
-    {{ var_dump($errors) }}
-  @endif
 
-  {{ Form::field_error('first_object', $errors) }}
-  {{ Form::label('first_object', 'Select first Object'); }}
-  {{ Form::select('first_object', CategoryObject::allForSelect(['new'=>"Define New"])) }}
+  {{ Form::field_error('first_object_id', $errors) }}
+  {{ Form::label('first_object_id', 'Select first Object'); }}
+  {{ Form::select('first_object_id', CategoryObject::allForSelect(['new'=>"Define New"])) }}
   &hellip; if not present define e new combination:<br>
   {{ Form::field_error('obj1_type', $errors) }}
   {{ Form::select('obj1_type', CategoryObject::validObjectTypes()) }}
@@ -20,9 +17,9 @@
   <div>{{ Form::form_checkbox('obj1_prep', 1, 'Has Preposition') }}</div>
   
   <hr>
-  {{ Form::field_error('second_object', $errors) }}
-  {{ Form::label('second_object', 'Select second Object'); }}
-  {{ Form::select('second_object', CategoryObject::allForSelect(['none'=>"None", 'new'=>"Define New"]) ) }}
+  {{ Form::field_error('second_object_id', $errors) }}
+  {{ Form::label('second_object_id', 'Select second Object'); }}
+  {{ Form::select('second_object_id', CategoryObject::allForSelect(['none'=>"None", 'new'=>"Define New"]) ) }}
   
   &hellip; if not present define e new combination:<br>
   {{ Form::field_error('obj2_type', $errors) }}

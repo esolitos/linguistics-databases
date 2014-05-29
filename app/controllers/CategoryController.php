@@ -36,7 +36,7 @@ class CategoryController extends \DoubleObjectController {
 	{
     $category = new OccurrenceCategory();
     
-    if ( Input::get("first_object") == 'new' ) {
+    if ( str_contains(Input::get("first_object_id"), 'new') ) {
       
       $objNew = new CategoryObject();
       $objNew->type            = Input::get('obj1_type');
@@ -45,7 +45,7 @@ class CategoryController extends \DoubleObjectController {
       $objNew->has_preposition = Input::get('obj1_prep', 0);
       
       if ($objNew->save()) {
-        $category->first_object = $objNew->id;
+        $category->first_object_id = $objNew->id;
       } else {
         $errors = [];
         foreach ($objNew->errors()->toArray() as $key => $value) {
@@ -55,23 +55,26 @@ class CategoryController extends \DoubleObjectController {
       }
     }
     
-    if ( Input::get("second_object") == 'none' ) {
-          $category->second_object = NULL;
+    
+    if ( str_contains(Input::get("second_object_id"), 'none') ) {
+          $category->second_object_id = NULL;
 
-    } else if ( Input::get("second_object") == 'new' ) {
+    } else if ( str_contains(Input::get("second_object_id"), 'new') ) {
       $objNew = new CategoryObject();
       $objNew->type            = Input::get('obj2_type');
       $objNew->form            = Input::get('obj2_form');
       $objNew->declination     = Input::get('obj2_decl');
       $objNew->has_preposition = Input::get('obj2_prep', 0);
       
-      if ($objNew->save()) {
-        $category->first_object = $objNew->id;
+      if ( $objNew->save() ) {
+        $category->second_object_id = $objNew->id;
+        
       } else {
         $errors = [];
         foreach ($objNew->errors()->toArray() as $key => $value) {
           $errors['obj2_'.$key] = $value;
         }
+        
         return Redirect::back()->withInput()->withErrors($errors);
       } 
     }
