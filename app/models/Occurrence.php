@@ -26,6 +26,7 @@ class Occurrence extends Ardent {
   );
   public static $relationsData = array(
     'category' => [self::BELONGS_TO, 'OccurrenceCategory', 'foreignKey'=>'category_id'],
+    // 'directProperties' => [ self::HAS_MANY, 'OccurrenceObjectProperty',  ]
   );
   
   
@@ -35,5 +36,20 @@ class Occurrence extends Ardent {
       "A"=>"Adult",
       "C"=>"Child",
      ];
+  }
+  
+  public function propertyNames()
+  {
+    return $this->hasManyThrough('ObjectProperty', 'OccurrenceObjectProperty', 'property_id', 'id');
+  }
+  
+  public function propertyIDs($type = '%')
+  {
+    return array_flatten($this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type)->get(['property_id'])->toArray());
+  }
+  
+  public function properties($type = '%')
+  {
+    return $this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type);
   }
 }

@@ -35,8 +35,8 @@
   {{ Form::text('corpus_row'); }}<br>
 
   
-  {{ Form::submit('Save and continue &rarr;') }}
-  {{ Form::submit('Save and define properties &rarr;') }}
+  {{ Form::submit('Save and continue &rarr;', ['class'=>'button small']) }}
+  {{ Form::submit('Save and define properties &rarr;', ['class'=>'button small']) }}
   {{ Form::close() }}
 
 @stop

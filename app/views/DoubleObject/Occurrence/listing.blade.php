@@ -43,7 +43,7 @@
       </tbody>
       </table>
     @else
-      <p>E<em>mpty Category</em></p>
+      <p><em>Empty Category</em></p>
     @endif
   @endforeach 
 

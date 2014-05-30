@@ -35,7 +35,7 @@
   {{ Form::text('corpus_row', $occurrence->corpus_row); }}<br>
 
   
-  {{ Form::submit('Save Changes') }}
+  {{ Form::submit('Save Changes', ['class'=>'button small']) }}
   {{ Form::close() }}
 
 @stop

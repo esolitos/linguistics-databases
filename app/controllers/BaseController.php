@@ -21,9 +21,11 @@ class BaseController extends Controller {
       $id = $name;
       if ( empty($options['id']) ) {
         $options['id'] = $name;
+      } else {
+        $id = $options['id'];
       }
       
-      return '<label for="'.$id.'">'.Form::checkbox($name, $value, $checked, $options).$label.'</label>';
+      return '<label for="'.$id.'">'.Form::checkbox($name, $value, $checked, $options).' '.$label.'</label>';
     });
     
     Form::macro('field_error', function($field, $errors){
