@@ -28,8 +28,6 @@ class CreateOccurrenceCategoryTable extends Migration {
       $table->foreign('second_object_id', 'sec_obj_id_foreign')
         ->references('id')->on('category_objects')
         ->onDelete('restrict')->onUpdate('cascade');
-      
-      $table->softDeletes();
     });
 		
   }

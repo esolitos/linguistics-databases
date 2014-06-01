@@ -18,8 +18,6 @@ class CreateObjectPropertyTable extends Migration {
 
 
       $table->unique('name');
-
-      $table->softDeletes();
     });
   }
 

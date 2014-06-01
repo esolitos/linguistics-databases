@@ -28,8 +28,6 @@ class CreateOccurrenceObjectPropertyTable extends Migration {
       $table->foreign('property_id', 'prop_id_foreign')
         ->references('id')->on('object_property')
         ->onDelete('restrict')->onUpdate('cascade');
-      
-      $table->softDeletes();
     });
   }
 

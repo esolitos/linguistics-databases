@@ -21,8 +21,6 @@ class CreateCategoryObjectsTable extends Migration {
 
 
       $table->unique( array('type', 'form', 'declination', 'has_preposition') );
-
-      $table->softDeletes();
     });
   }
 
