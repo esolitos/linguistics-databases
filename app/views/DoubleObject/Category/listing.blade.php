@@ -1,8 +1,5 @@
 @extends("common.layout")
 @section("content")
-	<h2>Double Object Database</h2>
-	<p>Database of duble object structures in Croatian</p>
-
 	<h3>Defined Categories</h3>
   <div class="listing">
     <table border="0" cellspacing="0" cellpadding="5">
@@ -24,7 +21,7 @@
           @else
             <td>-</td>
           @endif
-          <td>View Occurrences</td>
+          <td>Occurrences [TODO]</td>
           <td class="actions edit">{{ link_to_action("CategoryController@edit", "Edit Category", [$cat->id]) }}</td>
           <td class="actions remove">{{ link_to_route("category.delete", "Remove Category", [$cat->id]) }}</td>
         </tr>

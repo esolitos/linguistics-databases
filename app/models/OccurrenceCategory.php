@@ -29,7 +29,7 @@ class OccurrenceCategory extends Ardent {
   {
     $categories = empty($include) ? [] : $include;
     
-    foreach (OccurrenceCategory::with(['firstObj', 'secondObj'])->get() as $elem) {
+    foreach (OccurrenceCategory::with(['firstObj', 'secondObj'])->remember(1)->get() as $elem) {
       $first_prep = ($elem->firstObj->has_preposition) ? 'P': '-';
       
       if ( $elem->secondObj ) {
@@ -40,7 +40,8 @@ class OccurrenceCategory extends Ardent {
         $categories[$elem->id] = "{$elem->firstObj->type}  ( {$elem->firstObj->form} // {$elem->firstObj->declination} ) {$first_prep}";
       }
     }
-    // arsort($categories, SORT_STRING);
+
+    arsort($categories, SORT_STRING);
     return $categories;
   }
   

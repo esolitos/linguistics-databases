@@ -1,66 +1,51 @@
 @extends("common.layout")
 @section("content")
-	<h2>Double Object Database</h2>
-	<p>Database of duble object structures in Croatian</p>
-
-	<h3>
-    Viewing Occurrence: {{ $occurrence->id }}<br>
-    <small>Corpus Location: {{$occurrence->corpus_file}}:{{$occurrence->corpus_row}}</small>
-  </h3>
+  <h3>Viewing Occurrence: {{ $occurrence->id }}</h3>
+  <h6 class="subheader">Category: {{ OccurrenceCategory::allForSelect()[$occurrence->category_id] }}</h6>
   <div class="show-occurrence occurrence-objects">
     <div class="row">
-      <p class="small-12 columns"><strong>Text:</strong> {{ $occurrence->text }}</p>
+      <p class="small-12 columns"><strong>Text:</strong> <span class="occurrence-text">{{ $occurrence->text }}</span></p>
       <div class="small-12 columns">
-        <span class="small-4 large-2 columns"><strong>Verb:</strong> {{ $occurrence->verb }}</span>
-        <span class="small-4 large-2 columns"><strong>Keyword:</strong> {{ $occurrence->verb }}</span>
-        <span class="small-4 large-2 columns end"><strong>Speaker:</strong> {{ $occurrence->verb }}</span>
+        <div class="row">
+          <span class="small-12 medium-2 large-2 columns"><strong>Verb:</strong> {{ $occurrence->verb }}</span>
+          <span class="small-12 medium-3 large-2 columns"><strong>Keyword:</strong> {{ $occurrence->keyword }}</span>
+          <span class="small-12 medium-3 large-2 columns"><strong>Speaker:</strong> {{ Occurrence::validSpeakers()[$occurrence->speaker] }}</span>
+          <span class="small-12 medium-4 large-4 columns end"><strong>Coprus:</strong> {{$occurrence->corpus_file}}:{{$occurrence->corpus_row}}</span>
+        </div>
       </div>
     </div>
     <hr>
-    <div class="row">
-      <h5 class="small-12 columns">First Object: <strong>{{ CategoryObject::validObjectTypes()[$occurrence->category->firstObj->type] }}</strong></h5>
-      
-      <span class="small-4 large-3 columns"><em>From</em>: {{ CategoryObject::validObjectForms()[$occurrence->category->firstObj->form] }}</span>
-      <span class="small-4 large-3 columns"><em>Declination</em>: {{ CategoryObject::validObjectDeclinations()[$occurrence->category->firstObj->declination] }}</span>
-      <span class="small-12 large-3 columns end"><em>Preposition</em>: {{ ($occurrence->category->firstObj->has_preposition) ? 'Yes' : 'No' }}</span>
-      
+    <h5 class="panel-title">Direct Object Properties ({{count($occurrence->propertyIDs('DIR'))}})</h5>
+    <div class="row panel">
       <div class="small-12 columns">
-        <ul class="inline-list">
-            <li><strong>Properties:</strong></li>
-        @foreach(ObjectProperty::find($occurrence->propertyIDs($occurrence->category->firstObj->type)) as $item)
+        <ul class="inline-list object-properties-list">
+          @foreach(ObjectProperty::find($occurrence->propertyIDs('DIR')) as $item)
             <li>{{$item->name}}</li>
-        @endforeach
+          @endforeach
         </ul>
       </div>
     </div>
-    <div class="row">
-      <h5 class="small-12 columns">First Object: <strong>{{ CategoryObject::validObjectTypes()[$occurrence->category->secondObj->type] }}</strong></h5>
-      
-      <span class="small-4 large-3 columns"><em>From</em>: {{ CategoryObject::validObjectForms()[$occurrence->category->secondObj->form] }}</span>
-      <span class="small-4 large-3 columns"><em>Declination</em>: {{ CategoryObject::validObjectDeclinations()[$occurrence->category->secondObj->declination] }}</span>
-      <span class="small-12 large-3 columns end"><em>Preposition</em>: {{ ($occurrence->category->secondObj->has_preposition) ? 'Yes' : 'No' }}</span>
-      
+    <h5 class="panel-title">Indirect Object Properties ({{count($occurrence->propertyIDs('IND'))}})</h5>
+    <div class="row panel">
       <div class="small-12 columns">
-        <ul class="inline-list">
-            <li><strong>Properties:</strong></li>
-        @foreach(ObjectProperty::find($occurrence->propertyIDs($occurrence->category->secondObj->type)) as $item)
+        <ul class="inline-list object-properties-list">
+          @foreach(ObjectProperty::find($occurrence->propertyIDs('IND')) as $item)
             <li>{{$item->name}}</li>
-        @endforeach
+          @endforeach
         </ul>
       </div>
     </div>
-
   </div>
-  <div class="occurrence-actions">
-    <h4>Actions</h4>
+  
+  <div class="form-actions">
     <div class="button-bar">
       <ul class="button-group round">
-        <li>{{ link_to_action('OccurrenceController@index', 'Go to List', null, ['class'=>"button small secondary"]) }}</li>
+        <li>{{ link_to_action('OccurrenceController@index', '&larr; Back to list', null, ['class'=>"button small secondary"]) }}</li>
       </ul>
       <ul class="button-group radius">
         <li>{{ link_to_action('OccurrenceController@edit', 'Edit Occurrence', $occurrence->id, ['class'=>"button small"]) }}</li>
         <li>{{ link_to_action('OccurrenceController@defineObjectProperties', 'Set Properties', $occurrence->id, ['class'=>"button small"]) }}</li>
-        <li>{{ link_to_action('OccurrenceController@destroy', 'Delete', $occurrence->id, ['class'=>"button small alert"]) }}</li>
+        <li>{{ link_to_route('occurrence.delete', 'Delete', $occurrence->id, ['class'=>"button small alert"]) }}</li>
                 
 
       </ul>

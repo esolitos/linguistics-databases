@@ -1,7 +1,5 @@
 @extends("common.layout")
 @section("content")
-	<h2>Double Object Database</h2>
-	<p>Database of duble object structures in Croatian</p>
 
 	<h3>Define Object's Properties for Occurrence: {{ $occurrence->id }}</h3>  
   <div class="row property-definition-data category">

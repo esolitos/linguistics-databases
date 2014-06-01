@@ -1,25 +1,26 @@
 @extends("common.layout")
 @section("content")
-	<h2>Double Object Database</h2>
-	<p>Database of duble object structures in Croatian</p>
 
-	<h3>Create new Category</h3>
+	<h3>Edit Category: {{ $category->id }}</h3>
   {{ Form::open(array('action' => ['CategoryController@update', $category->id], 'method' => 'PATCH')) }}
-  @if( $errors->any() )
-    {{ var_dump($errors) }}
-  @endif
 
-  {{ Form::field_error('first_object_id', $errors) }}
-  {{ Form::label('first_object_id', 'Select first Object'); }}
-  {{ Form::select('first_object_id', CategoryObject::allForSelect(), $category->first_object_id) }}
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      {{ Form::label('first_object_id', 'Select first Object'); }}
+      {{ Form::select('first_object_id', CategoryObject::allForSelect(), $category->first_object_id) }}
+      {{ Form::field_error('first_object_id', $errors) }}
+    </div>
   
-  <hr>
-  {{ Form::field_error('second_object_id', $errors) }}
-  {{ Form::label('second_object_id', 'Select second Object'); }}
-  {{ Form::select('second_object_id', CategoryObject::allForSelect(['none'=>"None"]), $category->second_object_id ) }}
+    <div class="small-12 medium-6 columns">
+      {{ Form::label('second_object_id', 'Select second Object'); }}
+      {{ Form::select('second_object_id', CategoryObject::allForSelect(['none'=>"None"]), $category->second_object_id ) }}
+      {{ Form::field_error('second_object_id', $errors) }}
+    </div>
+  </div>
 
-  
-  {{ Form::submit('Create &rarr;') }}
+  <div class="form-actions">
+    {{ Form::submit('Save Changes', ['class'=>'button']) }}
+  </div>
   {{ Form::close() }}
 
 @stop

@@ -8,9 +8,8 @@
   <script type="text/javascript" src="{{ asset("js/vendor/jquery.js") }}"></script>
   <script type="text/javascript" src="{{ asset("js/vendor/fastclick.js") }}"></script>
 
-  <script type="text/javascript" src="{{ asset("js/foundation.min.js") }}"></script>
-
-  <script type="text/javascript" src="{{ asset("foundation/js/app.js") }}"></script>
+ <script type="text/javascript" src="{{ asset("js/foundation.min.js") }}"></script> 
+ <script type="text/javascript" src="{{ asset("foundation/js/app.js") }}"></script>
   
   <title>Linguistic Database</title>
 </head>
@@ -23,10 +22,15 @@
     @endif
     <div class="content-wrapper row">
       <div class="container">
+      	<h2>Double Object Database</h2>
+        <p class="short-description">Database of duble object structures in Croatian</p>       
         @if ( $messages->has('general') )
-          <div class="small-10 medium-6 large-4 small-centered messages">
+          <div class="small-10 small-centered columns messages">
             @foreach ($messages->get('general') as $error)
-              <div>{{ $error }}</div>
+              <div data-alert class="alert-box">
+                {{ $error }}
+                <a href="#" class="close">&times;</a>
+              </div>
             @endforeach
           </div>
         @endif

@@ -1,11 +1,9 @@
 /*
-Syntax error: Undefined variable: "$topbar-height".
-        on line 3 of /private/var/www/linguistics-db/public/foundation/scss/linguistics.scss
-
-1: /private/var/www/linguistics-db/public/foundation/scss/linguistics.scss
+Syntax error: Undefined variable: "$accordion-navigation-padding".
+        on line 28 of /private/var/www/linguistics-db/public/foundation/scss/linguistics.scss
 
 Backtrace:
-/private/var/www/linguistics-db/public/foundation/scss/linguistics.scss:3
+/private/var/www/linguistics-db/public/foundation/scss/linguistics.scss:28
 /Library/Ruby/Gems/2.0.0/gems/sass-3.2.18/lib/sass/script/variable.rb:49:in `_perform'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.2.18/lib/sass/script/node.rb:40:in `perform'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.2.18/lib/sass/tree/visitors/perform.rb:298:in `visit_prop'
@@ -86,4 +84,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined variable: \"$topbar-height\".\A         on line 3 of /private/var/www/linguistics-db/public/foundation/scss/linguistics.scss\A \A 1: /private/var/www/linguistics-db/public/foundation/scss/linguistics.scss"; }
+  content: "Syntax error: Undefined variable: \"$accordion-navigation-padding\".\A         on line 28 of /private/var/www/linguistics-db/public/foundation/scss/linguistics.scss"; }

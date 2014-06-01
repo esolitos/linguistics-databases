@@ -34,7 +34,10 @@ class CategoryController extends \DoubleObjectController {
 	 */
 	public function store()
 	{
-    $category = new OccurrenceCategory();
+    $category = new OccurrenceCategory([
+      'first_object_id' => Input::get('first_object_id'),
+      'second_object_id' => Input::get('second_object_id'),
+    ]);
     
     if ( str_contains(Input::get("first_object_id"), 'new') ) {
       
@@ -110,7 +113,7 @@ class CategoryController extends \DoubleObjectController {
 	 */
 	public function edit($id)
 	{
-    $this->view_data['category'] = OccurrenceCategory::with('firstObj', 'secondObj')->find($id);
+    $this->view_data['category'] = OccurrenceCategory::find($id);
     
 		return View::make('DoubleObject.Category.edit', $this->view_data);
 	}
@@ -128,7 +131,7 @@ class CategoryController extends \DoubleObjectController {
     $category->forceEntityHydrationFromInput = true;
     
     if ( $category->save() ) {
-      return Redirect::back()->with('messages', ['Category updated successfully.']);
+      return Redirect::action('CategoryController@index')->with('messages', ['Category updated successfully.']);
     } else {
       return Redirect::back()->withInput()->withErrors( $category->errors() );
     }
@@ -143,9 +146,20 @@ class CategoryController extends \DoubleObjectController {
 	 */
 	public function destroy($id)
 	{
-		OccurrenceCategory::destroy($id);
-
-    return Redirect::back();
+    if ( Input::get('confirm', FALSE) ) {
+  		OccurrenceCategory::destroy($id);
+      return Redirect::action('CategoryController@index')->withMessages(['Selected Category has been deleted.']);
+      
+    } else {
+      $this->view_data['confirm'] = [
+        'title' => "Removing Category: {$id}",
+        'message' => "Are you sure to remove the Occurrence Category?",
+        'path' => action('CategoryController@destroy', $id),
+        'cancel-url' => URL::previous(),
+      ];
+      
+      return View::make('common.confirm', $this->view_data);
+    }
 	}
 
 }

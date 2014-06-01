@@ -33,16 +33,16 @@ class OccurrenceController extends \DoubleObjectController {
 	 * @return Response
 	 */
 	public function store()
-	{
+	{ 
     $occurrence = new Occurrence();
     
     if ( $occurrence->save() ) {
       
-      if ( str_contains(Input::get('submit'), 'continue') ) {
-        return Redirect::back()->withMessages(['Occurrence inserted successfully.']);
+      if ( Input::has('set-properties') ) {
+        return Redirect::action('OccurrenceController@defineObjectProperties', $occurrence->id);
         
       } else {
-        return Redirect::action('OccurrenceController@defineObjectProperties', $occurrence->id);
+        return Redirect::back()->withMessages(['Occurrence inserted successfully.']);
       }
       
     } else {
@@ -88,7 +88,7 @@ class OccurrenceController extends \DoubleObjectController {
     $occurrence->forceEntityHydrationFromInput = true;
     
     if ( $occurrence->save() ) {
-      return Redirect::back()->withMessages(['Occurrence updated successfully.']);
+      return Redirect::action('OccurrenceController@show', $id)->withMessages(['Occurrence updated successfully.']);
     } else {
       return Redirect::back()->withInput()->withErrors( $occurrence->errors() );
     }
@@ -102,9 +102,20 @@ class OccurrenceController extends \DoubleObjectController {
 	 */
 	public function destroy($id)
 	{
-		Occurrence::destroy($id);
-
-    return Redirect::back()->withMessages(['Selected occurrence has been deleted.']);
+    if ( Input::get('confirm', FALSE) ) {
+      Occurrence::destroy($id);
+      return Redirect::action('OccurrenceController@index')->withMessages(['Selected occurrence has been deleted.']);
+      
+    } else {
+      $this->view_data['confirm'] = [
+        'title' => "Removing Occurrence: {$id}",
+        'message' => "Are you sure to remove the occurrence?",
+        'path' => action('OccurrenceController@destroy', $id),
+        'cancel-url' => URL::previous(),
+      ];
+      
+      return View::make('common.confirm', $this->view_data);
+    }
 	}
 
 
@@ -160,7 +171,7 @@ class OccurrenceController extends \DoubleObjectController {
       }
     }
     
-    return Redirect::action('OccurrenceController@editObjectProperties', $id)->withMessages(["Object's Properties updated for this occurrence!"]);
+    return Redirect::action('OccurrenceController@show', $id)->withMessages(["Object's Properties updated for this occurrence!"]);
   }
   
   

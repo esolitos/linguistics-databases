@@ -1,8 +1,5 @@
 @extends("common.layout")
 @section("content")
-	<h2>Double Object Database</h2>
-	<p>Database of duble object structures in Croatian</p>
-
 	<h3>Defined Object Properties</h3>
   <div class="listing">
     <table border="0" cellspacing="0" cellpadding="5">

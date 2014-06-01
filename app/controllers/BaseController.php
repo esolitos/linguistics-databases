@@ -31,7 +31,7 @@ class BaseController extends Controller {
     Form::macro('field_error', function($field, $errors){
         if($errors->has($field)){
             $msg = $errors->first($field);
-            return "<span class=\"error\">$msg</span>";
+            return "<small class='error'>$msg</small>";
         }
         return '';
     });
