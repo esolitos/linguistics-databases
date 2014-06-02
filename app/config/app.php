@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => $_ENV['LARAVEL_DEBUG'],
+	'debug' => getenv('LARAVEL_DEBUG'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => $_ENV['LARAVEL_APP_URL'],
+	'url' => getenv('LARAVEL_APP_URL'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => $_ENV['LARAVEL_APP_KEY'],
+	'key' => getenv('LARAVEL_APP_KEY'),
 
 	/*
 	|--------------------------------------------------------------------------

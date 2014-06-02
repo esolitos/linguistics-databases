@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => $_ENV['LARAVEL_MAIL_DRIVER'],
+	'driver' => getenv('LARAVEL_MAIL_DRIVER'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => $_ENV['LARAVEL_MAIL_SMTP_HOST'],
+	'host' => getenv('LARAVEL_MAIL_SMTP_HOST'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return array(
 	|
 	*/
 
-	'port' => $_ENV['LARAVEL_MAIL_SMTP_PORT'],
+	'port' => getenv('LARAVEL_MAIL_SMTP_PORT'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => $_ENV['LARAVEL_APP_EMAIL'], 'name' => $_ENV['LARAVEL_APP_SENDER']),
+	'from' => array('address' => getenv('LARAVEL_APP_EMAIL'), 'name' => getenv('LARAVEL_APP_SENDER')),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return array(
 	|
 	*/
 
-	'encryption' => $_ENV['LARAVEL_MAIL_SMTP_ENCRYPT'],
+	'encryption' => getenv('LARAVEL_MAIL_SMTP_ENCRYPT'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => $_ENV['LARAVEL_MAIL_SMTP_USER'],
+	'username' => getenv('LARAVEL_MAIL_SMTP_USER'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => $_ENV['LARAVEL_MAIL_SMTP_PASS'],
+	'password' => getenv('LARAVEL_MAIL_SMTP_PASS'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return array(
 	|
 	*/
 
-	'sendmail' => $_ENV['LARAVEL_MAIL_SENDMAIL'],
+	'sendmail' => getenv('LARAVEL_MAIL_SENDMAIL'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -119,6 +119,6 @@ return array(
 	|
 	*/
 
-	'pretend' => $_ENV['LARAVEL_MAIL_PRETEND'],
+	'pretend' => getenv('LARAVEL_MAIL_PRETEND'),
 
 );
