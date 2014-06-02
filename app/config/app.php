@@ -120,7 +120,6 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
-    'Way\Generators\GeneratorsServiceProvider',
     'Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider',
     'Menu\MenuServiceProvider',
 	),
