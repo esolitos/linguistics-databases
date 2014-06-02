@@ -53,3 +53,8 @@ Route::group(array('before' => 'auth'), function()
   Route::post('double-object/occurrence/{id}/edit-properties', ['as'=>'objectProperty.editProperties', 'uses'=>'OccurrenceController@updateObjectProperties']);
   
 // });  // TODO: Once implemented the user-management remove the comment
+
+
+
+  // Temporary Route
+  Route::controller('migrate-old-db','MigrateOldSetupController');
