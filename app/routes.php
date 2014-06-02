@@ -13,10 +13,7 @@
 Route::pattern('id', '[0-9]+');
 
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', 'HomeController@index');
 
 Route::group(array('prefix' => 'user'), function() {
   Route::get("login", [ "as"   => "user/login", "uses" => "UserController@index" ]);
