@@ -4,12 +4,17 @@
   <meta charset="UTF-8" />
 	
   <link rel="stylesheet" href="{{ asset("css/app.css") }}" />
+
+  <script type="text/javascript" src="{{ asset("javascript/frontend.js") }}"></script>
+
+{{--
   <script type="text/javascript" src="{{ asset("js/vendor/modernizr.js") }}"></script>
   <script type="text/javascript" src="{{ asset("js/vendor/jquery.js") }}"></script>
   <script type="text/javascript" src="{{ asset("js/vendor/fastclick.js") }}"></script>
 
  <script type="text/javascript" src="{{ asset("js/foundation.min.js") }}"></script> 
  <script type="text/javascript" src="{{ asset("foundation/js/app.js") }}"></script>
+--}}
   
   <title>Linguistic Database</title>
 </head>
