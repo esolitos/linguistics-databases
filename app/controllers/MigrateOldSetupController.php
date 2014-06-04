@@ -6,12 +6,20 @@ class MigrateOldSetupController extends BaseController {
 
   public function getIndex()
   {
-    
+    Redis::select(2);
+    Redis::flushdb();
     return Redirect::action('MigrateOldSetupController@getCategories') ;
   }
   
+  public function getCompleted()
+  {
+    return "Migration completed!";
+  }
+  
+  
   public function getCategories()
   {
+    Redis::select(2);
     $old_categories = DB::connection('old-mysql')->table('double_obj_structure')->get();
         
     foreach ($old_categories as $oldCat) {
@@ -54,10 +62,7 @@ class MigrateOldSetupController extends BaseController {
         
         $newCat->{$pos.'_object_id'} = $new_cat_obj->id;
         
-      } else {
-        $pos = ($pos == 'first') ? 'second' : 'first';
-        $newCat->{$pos.'_object_id'} = NULL;
-      } // DIRECT
+      } // DIRECT Object
       
       // INDIRECT Object creation or definition
       if ( array_search("IO", $oldCat_order) !== FALSE ) {
@@ -90,10 +95,7 @@ class MigrateOldSetupController extends BaseController {
 
         $newCat->{$pos.'_object_id'} = $new_cat_obj->id;
         
-      } else {
-        $pos = ($pos == 'first') ? 'second' : 'first';
-        $newCat->{$pos.'_object_id'} = NULL;
-      } // INDIRECT
+      } // INDIRECT Object
       
       $existing_cat = OccurrenceCategory::where('first_object_id', '=', $newCat->first_object_id)
         ->where('second_object_id', '=', $newCat->second_object_id)->get();
@@ -125,10 +127,11 @@ class MigrateOldSetupController extends BaseController {
 
   public function getProperties()
   {
+    Redis::select(2);
     $old_properties = DB::connection('old-mysql')->table('object_properties_definition')->get();
     
     foreach ($old_properties as $oldProp) {
-      $existProp = ObjectProperty::where('name', 'LIKE', $oldProp->name)->get();
+      $existProp = ObjectProperty::where('name', '=', $oldProp->name)->get();
       
       $newProp_id = 0;
       if ( $existProp->count() ) {
@@ -156,6 +159,7 @@ class MigrateOldSetupController extends BaseController {
   
   public function getOccurrence()
   {
+    Redis::select(2);
     $old_occurrences = DB::connection('old-mysql')->table('occurrences')->get();
     
     foreach ($old_occurrences as $oldOccurr) {
@@ -203,44 +207,41 @@ class MigrateOldSetupController extends BaseController {
   
   public function getObjectProperties()
   {
+    Redis::select(2);
     $oldDB = DB::connection('old-mysql');
-    
-    $old_objects = $oldDB->table('occurrence_objects')->get();
-    
-    // $newProperties = [];
-    $sql = "INSERT IGNORE INTO `occurrence_object_property` (`occurrence_id`, `property_id`, `type`) VALUES ";
+
     echo "Copying Properties<br><br>";
+    $old_objects = $oldDB->table('occurrence_objects')->orderBy('occurr_id')->get();
+    
+    $newProperties = [];
+    // $sql = "INSERT IGNORE INTO `occurrence_object_property` (`occurrence_id`, `property_id`, `type`) VALUES ";
+    
     foreach ($old_objects as $oldObj) {
       $newOccurr_id = Redis::get("oldOccurr:{$oldObj->occurr_id}");
-      echo "Occurrence {$oldObj->occurr_id} => {$newOccurr_id}<br>";
+      $type = ($oldObj->obj_type == 'DO') ? 'DIR' : 'IND';
+      
+      echo "<br>Occurrence {$oldObj->occurr_id} => {$newOccurr_id}, Obj: {$type}<br>";
       
       $old_properties = $oldDB->table('object_vs_properties')->where('id_obj', '=', $oldObj->id)->get();
-      
       foreach ($old_properties as $oldObjProp) {
-        $type = ($oldObj->obj_type = 'DO') ? 'DIR' : 'IND';
         $newProp_id = Redis::get("oldProp:{$oldObjProp->id_prop}");
+        echo "Property {$oldObjProp->id_prop} => {$newProp_id}<br>";
         
-        // $newProperties[] = [
-        //   'occurrence_id' => $newOccurr_id,
-        //   'type' => $type,
-        //   'property_id' => $newProp_id,
-        // ];
-        $sql .= "({$newOccurr_id}, {$newProp_id}, '{$type}'), ";
+        $newProperties[] = [
+          'occurrence_id' => $newOccurr_id,
+          'type' => $type,
+          'property_id' => $newProp_id,
+        ];
+        // $sql .= "({$newOccurr_id}, {$newProp_id}, '{$type}'), ";
       }
     }
     
     
-    DB::statement( substr($sql, 0, -2) );
-    // dd($old_objects);
-    // dd($newProperties);
+    // DB::statement( substr($sql, 0, -2) );
     
-    // OccurrenceObjectProperty::insert($newProperties);
-
-    // $old_properties = $oldDB->table('object_vs_properties')->get();
-    // 
-    // foreach ($old_properties as $oldProp) {
-    //   $oldProp = $oldDB->table('occurrences')->where('id', '=', '$oldProp->')
-    // }
+    OccurrenceObjectProperty::insert($newProperties);
+    
+    return Redirect::action('MigrateOldSetupController@getCompleted') ;
   }
   
   
