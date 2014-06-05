@@ -49,6 +49,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('double-object/occurrence/{id}/edit-properties', ['as'=>'objectProperty.editProperties', 'uses'=>'OccurrenceController@editObjectProperties']);
   Route::post('double-object/occurrence/{id}/edit-properties', ['as'=>'objectProperty.editProperties', 'uses'=>'OccurrenceController@updateObjectProperties']);
   
+  Route::controller('statistics','StatisticsController');
+  
 // });  // TODO: Once implemented the user-management remove the comment
 
 
