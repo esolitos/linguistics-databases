@@ -13,6 +13,9 @@ class DoubleObjectController extends \BaseController {
       ->add( action('CategoryController@index') , 'Categories',  Menu::items(null, $ul_attr)->add( action('CategoryController@create') , 'New Category'), [], $li_attr)
       ->add( action('ObjectPropertyController@index') , 'Object Properties', Menu::items(null, $ul_attr)->add( action('ObjectPropertyController@create') , 'New Property'), [], $li_attr)
       ->add( action('OccurrenceController@index') , 'Occurrence', Menu::items(null, $ul_attr)->add( action('OccurrenceController@create') , 'New Occurrence'), [], $li_attr );
+
+    Menu::handler('top-menu-right')
+      ->add( action('StatisticsController@getIndex') , 'Statistics', null, [], [] );
   }
 
   public function index()
