@@ -15,7 +15,9 @@ class DoubleObjectController extends \BaseController {
       ->add( action('OccurrenceController@index') , 'Occurrence', Menu::items(null, $ul_attr)->add( action('OccurrenceController@create') , 'New Occurrence'), [], $li_attr );
 
     Menu::handler('top-menu-right')
+      ->add( action('QueryController@getIndex') , 'Query DB', null, [], [] )
       ->add( action('StatisticsController@getIndex') , 'Statistics', null, [], [] );
+
   }
 
   public function index()

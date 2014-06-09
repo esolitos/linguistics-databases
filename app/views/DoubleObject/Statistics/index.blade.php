@@ -39,7 +39,7 @@
       Occurrences per verb: <small>(<strong>Coming Soon</strong>: Click the verb for view the occurrences.)</small>
       <ul>
         @foreach($occurrences->per_verb as $verb => $tot)
-            <li><strong><a href="#">{{$verb}}</a></strong> -&gt; {{$tot}}</li>
+            <li><strong>{{ link_to_route('occurrence.get-by', $verb, ['verb', $verb]) }}</strong> -&gt; {{$tot}}</li>
         @endforeach
       </ul>
     </li>
