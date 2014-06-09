@@ -39,6 +39,7 @@ Route::group(array('before' => 'auth'), function()
   
   Route::resource('double-object/occurrence', 'OccurrenceController');
   Route::get('double-object/occurrence/{id}/delete', ['as'=>'occurrence.delete', 'uses'=>'OccurrenceController@destroy']);
+  Route::get('double-object/occurrence/by/{filter}/{value}', ['as'=>'occurrence.get-by', 'uses'=>'OccurrenceController@getBy']);
   
   Route::resource('double-object/object-property', 'ObjectPropertyController');
   Route::get('double-object/object-property/{id}/delete', ['as'=>'objectProperty.delete', 'uses'=>'ObjectPropertyController@destroy']);

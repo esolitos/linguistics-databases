@@ -6,6 +6,13 @@ class OccurrenceController extends \DoubleObjectController {
     'IND' => [],
     'DIR' => [],
   ];
+  
+  public function __construct()
+  {
+    parent::__construct();
+    
+    $this->view_data['allCategories'] = OccurrenceCategory::allForSelect();
+  }
 
 	/**
 	 * Display a listing of the resource.
@@ -14,6 +21,8 @@ class OccurrenceController extends \DoubleObjectController {
 	 */
 	public function index()
 	{
+    $this->view_data['occurrences'] = Occurrence::all();
+    
     return View::make('DoubleObject.Occurrence.listing', $this->view_data);
 	}
 
@@ -62,6 +71,15 @@ class OccurrenceController extends \DoubleObjectController {
     
     return View::make('DoubleObject.Occurrence.show', $this->view_data);
 	}
+  
+  
+  public function getBy($filter, $value)
+  {
+    $this->view_data['occurrences'] = Occurrence::where($filter, '=', $value)->get();
+    $this->view_data['condition'] = (object) [ 'filter' => $filter, 'value' => $value ];
+
+    return View::make('DoubleObject.Occurrence.listing', $this->view_data);
+  }
 
 	/**
 	 * Show the form for editing the specified resource.
