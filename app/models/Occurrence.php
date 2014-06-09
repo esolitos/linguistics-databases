@@ -4,7 +4,7 @@ class Occurrence extends Ardent {
   
   protected $table = 'occurrence';
   protected $softDelete = true;
-  public $timestamps = false;
+  public $timestamps = true;
   
   protected $hidden = [];
   protected $fillable = ['category_id', 'text', 'verb', 'keyword', 'speaker', 'corpus_file', 'corpus_row'];
