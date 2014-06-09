@@ -21,7 +21,7 @@
           @else
             <td>-</td>
           @endif
-          <td>Occurrences [TODO]</td>
+          <td class="actions view-occurrences">{{ link_to_route('category.occurrences', 'Occurrences', [$cat->id]) }} </td>
           <td class="actions edit">{{ link_to_action("CategoryController@edit", "Edit Category", [$cat->id]) }}</td>
           <td class="actions remove">{{ link_to_route("category.delete", "Remove Category", [$cat->id]) }}</td>
         </tr>

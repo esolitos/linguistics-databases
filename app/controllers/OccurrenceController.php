@@ -59,18 +59,18 @@ class OccurrenceController extends \DoubleObjectController {
     }
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return Response
+   */
+  public function show($id)
+  {
     $this->view_data['occurrence'] = Occurrence::find($id);
     
     return View::make('DoubleObject.Occurrence.show', $this->view_data);
-	}
+  }
   
   
   public function getBy($filter, $value)
@@ -80,15 +80,23 @@ class OccurrenceController extends \DoubleObjectController {
 
     return View::make('DoubleObject.Occurrence.listing', $this->view_data);
   }
+  
+  public function getByCategory($category)
+  {
+    $this->view_data['occurrences'] = Occurrence::where('category_id', '=', $category)->get();
+    $this->view_data['condition'] = (object) [ 'filter' => 'Category', 'value' => OccurrenceCategory::allForSelect()[$category] ];
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
+    return View::make('DoubleObject.Occurrence.listing', $this->view_data);
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return Response
+   */
+  public function edit($id)
+  {
     $this->view_data['occurrence'] = Occurrence::find($id);
     
     return View::make('DoubleObject.Occurrence.edit', $this->view_data);

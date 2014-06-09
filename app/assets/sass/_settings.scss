@@ -2,16 +2,15 @@
 // foundation.zurb.com
 // Licensed under MIT Open Source
 
-
 //
 // FOUNDATION SETTINGS
 //
 
 // This is the default html and body font-size for the base rem value.
- $rem-base: 16px;
+$rem-base: 16px;
 
 // Allows the use of rem-calc() or lower-bound() in your settings
-//@import "foundation/functions";
+@import "functions";
 
 // The default font-size is set to 100% of the browser style sheet (usually 16px)
 // for compatibility with browser-based text zoom or user-set defaults.
@@ -80,7 +79,8 @@
 // $shiny-edge-color: rgba(#E3E73B, .5);
 // $shiny-edge-active-color: rgba(#838701, .2);
 
-// $column-gutter: rem-calc(30);
+// $column-gutter: rem-calc(100);
+ $column-gutter: em-calc(10);
 
 // Media Query Ranges
 // $small-range: (0em, 40em);

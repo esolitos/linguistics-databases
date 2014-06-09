@@ -1,2 +1,98 @@
 // place here your aplication specific SCSS Code
 
+a[class^=fi-]::before {
+    font-size: 1.5rem;
+    line-height: 1.1rem;
+    vertical-align: middle;
+}
+
+
+div#occurrences-listing-page {
+    display: none;
+    table {
+        thead {
+            th.sorting,
+            th.sorting_asc,
+            th.sorting_desc {
+                padding-right: 20px;
+            }
+            th.o-id {
+                width: 50px;
+            }
+            th.o-category {
+                width: 260px;
+            }
+            th.o-verb {
+                width: 75px;
+            }
+            th.o-keyword {
+                width: 75px;
+            }
+            th.o-corpus {
+                width: 180px;
+            }
+            th.actions {
+                width: 50px;
+            }
+        }
+        tbody {
+            a.occurrence-text {
+                display: inline-block;
+                max-width: 300px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .actions {
+                &.edit {
+                    color: $primary-color-light;
+                    
+                    &:hover {
+                        color: $primary-color-alt;
+                    }
+                }
+                &.delete {
+                    color: $alert-color;
+
+                    &:hover {
+                        color: darken($alert-color, 15);
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+#filter-area {
+//    @include grid-row();
+    @include panel();
+    
+    .categories {
+        list-style: none;
+        margin:0;
+        padding:0;
+        @include grid-row();
+        
+        li {
+            @include grid-column(3);
+            margin:0;
+            padding:0;
+            
+            label {
+                display: block;
+                padding: 6px 0;
+                margin:0 auto;
+                text-align:center;
+                
+                &.selected {
+                    background-color: $primary-color;
+                }
+            }
+            
+            input {
+                display: none;
+            }
+        }
+    }
+}

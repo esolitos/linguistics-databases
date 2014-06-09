@@ -4,17 +4,16 @@
   <meta charset="UTF-8" />
 	
   <link rel="stylesheet" href="{{ asset("css/app.css") }}" />
+  <link rel="stylesheet" href="{{ asset("css/foundation-icons/foundation-icons.css") }}" />
 
-  <script type="text/javascript" src="{{ asset("javascript/frontend.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("javascript/package.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("javascript/app.js") }}"></script>
 
-{{--
-  <script type="text/javascript" src="{{ asset("js/vendor/modernizr.js") }}"></script>
-  <script type="text/javascript" src="{{ asset("js/vendor/jquery.js") }}"></script>
-  <script type="text/javascript" src="{{ asset("js/vendor/fastclick.js") }}"></script>
-
- <script type="text/javascript" src="{{ asset("js/foundation.min.js") }}"></script> 
- <script type="text/javascript" src="{{ asset("foundation/js/app.js") }}"></script>
---}}
+  @if( !empty($extra_scripts) )
+    @foreach($extra_scripts as $item)
+      <script type="{{ $item->type }}" src="{{ $item->src }}"></script>
+    @endforeach
+  @endif
   
   <title>Linguistic Database</title>
 </head>
