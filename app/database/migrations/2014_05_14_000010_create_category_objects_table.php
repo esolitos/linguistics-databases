@@ -13,6 +13,8 @@ class CreateCategoryObjectsTable extends Migration {
   public function up()
   {
     Schema::create('category_objects', function(Blueprint $table) {
+      $table->engine = "InnoDB";
+      
       $table->increments('id');
       $table->enum('type', array('IND', 'DIR'));
       $table->enum('form', array('NP', 'PR', 'CL'));

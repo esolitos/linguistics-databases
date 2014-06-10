@@ -13,6 +13,8 @@ class CreateOccurrenceObjectPropertyTable extends Migration {
   public function up()
   {
     Schema::create('occurrence_object_property', function(Blueprint $table) {
+      $table->engine = "InnoDB";
+      
       $table->integer('occurrence_id')->unsigned();
       $table->enum('type', array('IND', 'DIR'));
       $table->integer('property_id')->unsigned();
@@ -27,7 +29,7 @@ class CreateOccurrenceObjectPropertyTable extends Migration {
 
       $table->foreign('property_id', 'prop_id_foreign')
         ->references('id')->on('object_property')
-        ->onDelete('restrict')->onUpdate('cascade');
+        ->onDelete('cascade')->onUpdate('cascade');
     });
   }
 

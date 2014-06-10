@@ -13,6 +13,8 @@ class CreateOccurrenceTable extends Migration {
   public function up()
   {
     Schema::create('occurrence', function(Blueprint $table) {
+      $table->engine = "InnoDB";
+      
       $table->increments('id');
       $table->integer('category_id')->unsigned();
       $table->text('text');
@@ -23,13 +25,14 @@ class CreateOccurrenceTable extends Migration {
       $table->string('corpus_file', 100);
       $table->integer('corpus_row')->unsigned();
 
+      $table->timestamps();
 
       $table->index('category_id');
 
 
       $table->foreign('category_id', 'cat_id_foreign')
         ->references('id')->on('occurrence_category')
-        ->onDelete('restrict')->onUpdate('cascade');
+        ->onDelete('cascade')->onUpdate('cascade');
 
       $table->softDeletes();
     });
