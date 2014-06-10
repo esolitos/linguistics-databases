@@ -13,6 +13,8 @@ class CreateOccurrenceCategoryTable extends Migration {
   public function up()
   {
     Schema::create('occurrence_category', function(Blueprint $table) {
+      $table->engine = "InnoDB";
+      
       $table->increments('id');
       $table->integer('first_object_id')->unsigned();
       $table->integer('second_object_id')->unsigned()->nullable();

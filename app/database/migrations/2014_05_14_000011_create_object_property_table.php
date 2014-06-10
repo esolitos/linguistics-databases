@@ -13,6 +13,8 @@ class CreateObjectPropertyTable extends Migration {
   public function up()
   {
     Schema::create('object_property', function(Blueprint $table) {
+      $table->engine = "InnoDB";
+      
       $table->increments('id');
       $table->string('name', 20);
 
