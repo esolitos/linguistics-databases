@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="{{ asset("css/app.css") }}" />
   <link rel="stylesheet" href="{{ asset("css/foundation-icons/foundation-icons.css") }}" />
 
-  <script type="text/javascript" src="{{ asset("javascript/package.js") }}"></script>
+  <script type="text/javascript" src="{{ asset("javascript/linguistics-db.js") }}"></script>
   <script type="text/javascript" src="{{ asset("javascript/app.js") }}"></script>
 
   @if( !empty($extra_scripts) )
