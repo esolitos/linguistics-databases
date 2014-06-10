@@ -1,5 +1,9 @@
 <?php 
 
+/*
+ * This is an example how the configuration file should look.
+ */
+
 return [
   'LARAVEL_DEBUG'       => TRUE/FALSE,
   'LARAVEL_APP_EMAIL'		=> 'mail@example.xom',
