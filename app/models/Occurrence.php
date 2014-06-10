@@ -44,11 +44,11 @@ class Occurrence extends Ardent {
   
   public function propertyIDs($type = '%')
   {
-    return array_flatten($this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type)->remember('1')->get(['property_id'])->toArray());
+    return array_flatten($this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type)->get(['property_id'])->toArray());
   }
   
   public function properties($type = '%')
   {
-    return $this->hasMany('OccurrenceObjectProperty')->remember('1')->where('type', 'LIKE', $type);
+    return $this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type);
   }
 }

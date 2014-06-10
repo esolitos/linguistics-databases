@@ -1,3 +1,4 @@
+/app/config/local
 /bootstrap/compiled.php
 /vendor
 /node_modules
