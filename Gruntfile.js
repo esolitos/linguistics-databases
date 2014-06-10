@@ -81,6 +81,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask('default', ['concat:dev', 'copy:dev', 'watch']);
-    grunt.registerTask('dist', ['concat:dist', 'copy:dist', 'uglify:dist']);
+    grunt.registerTask('default', ['concat:dev', 'copy:dev', 'compass:dev', 'watch']);
+    grunt.registerTask('dist', ['concat:dist', 'copy:dist', 'compass:dist', 'uglify:dist']);
 }
