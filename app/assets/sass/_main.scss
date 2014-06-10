@@ -96,3 +96,33 @@ div#occurrences-listing-page {
         }
     }
 }
+
+.db-query-page {
+    
+    #query-build-area {
+        min-height: 15rem;
+        
+    }
+    
+    #select-output {
+        
+        > p.placeholder {
+            display: none;
+        }
+    }
+    
+    #add-constraints {
+        
+        > div.options {
+            display: none;
+        }
+    }
+    
+    
+    
+    #query-area {
+        display: none;
+        min-height: 1rem;
+    }   
+    
+}

@@ -32,6 +32,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
     'Way\Generators\GeneratorsServiceProvider',
+    'Aheissenberger\Foundation\FoundationServiceProvider',
     'Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider',
     'Menu\MenuServiceProvider',
 	),

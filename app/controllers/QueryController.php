@@ -19,8 +19,21 @@ class QueryController extends \DoubleObjectController {
   
   public function postVerify()
   {
+    // Verify that the query makes sense!
     
-    return View::make('DoubleObject.Query.build', $this->view_data);
+    if ( Input::ajax() ) {
+      Response::json( ['key' => 'value'] );
+    } else {
+      return Redirect::action('QueryController@getIndex');
+    }
+  }
+  
+  public function postExecute()
+  {
+    // Verify that the query makes sense!
+    
+    Redis::incr('tot_queries');
+    return Redirect::action('QueryController@getIndex')->withMessages(['Query executed (I\'m joking!)']);
   }
 
 }
