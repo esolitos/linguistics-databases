@@ -19,15 +19,11 @@
 </head>
 <body {{ HTML::attributes($body_attributes) }}>
   <div id="page-wrapper" class="page">
-    @if ( Auth::check() )
-      @include("common.header")
-    @else
-      @include("common.simple-header")
-    @endif
+    @include("common.simple-header")
     <div class="content-wrapper row">
       <div class="container">
-      	<h2>Double Object Database</h2>
-        <p class="short-description">Database of duble object structures in Croatian</p>       
+        <h2>Double Object Database</h2>
+        <p class="short-description">Database of duble object structures in Croatian</p>
         @if ( $messages->has('general') )
           <div class="small-10 small-centered columns messages">
             @foreach ($messages->get('general') as $error)
@@ -43,11 +39,7 @@
         </div>
       </div>
     </div>
-    @if ( Auth::check() )
-      @include("common.footer")
-    @else
-      @include("common.simple-footer")
-    @endif
+    @include("common.simple-footer")
   </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-@extends("layout")
+@extends("common.layout")
 @section("content")
   {{ Form::open() }}
     {{ $errors->first("token") }}<br />

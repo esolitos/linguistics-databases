@@ -14,12 +14,15 @@ Route::pattern('id', '[0-9]+');
 
 
 Route::get('/', 'HomeController@index');
+Route::controller('password', 'RemindersController');
 
 Route::group(array('prefix' => 'user'), function() {
-  Route::get("login", [ "as"   => "user/login", "uses" => "UserController@index" ]);
-  Route::post("login", [ "as"   => "user/login", "uses" => "UserController@login" ]);
-
-  Route::any("logout", [ "as"   => "user/logout", "uses" => "UserController@logout" ]);
+  Route::get("login", [ "as"   => "user.login", "uses" => "UserController@index" ]);
+  Route::post("login", [ "as"   => "user.login", "uses" => "UserController@login" ]);
+  
+  Route::any("logout", [ "as"   => "user.logout", "uses" => "UserController@logout" ]);
+  Route::get("sign-up", [ "as"   => "user.register", "uses" => "UserController@signUp" ]);
+  Route::post("sign-up", [ "as"   => "user.register", "uses" => "UserController@register" ]);
 });
 
 
@@ -27,7 +30,7 @@ Route::group(array('prefix' => 'user'), function() {
 /* Require Login for those routes */
 Route::group(array('before' => 'auth'), function()
 {
-	Route::get('user/profile', [ "as"   => "user/profile", "uses" => "UserController@showProfile" ] );
+	Route::get('user/profile', [ "as"   => "user.profile", "uses" => "UserController@showProfile" ] );
 
 }); // TODO: Once implemented the user-management remove this parentesis
 
@@ -59,4 +62,4 @@ Route::group(array('before' => 'auth'), function()
 
 
   // Temporary Route
-  Route::controller('migrate-old-db','MigrateOldSetupController');
+  // Route::controller('migrate-old-db','MigrateOldSetupController');
