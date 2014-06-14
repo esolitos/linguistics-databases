@@ -151,21 +151,10 @@ class BaseController extends Controller {
     if ( !empty( $this->dataTableStyle ) ) {
       $this->view_data['extra_style'][] = $this->dataTableStyle;
     } else {
-      // $this->view_data['extra_style'][] = "//cdn.datatables.net/1.10.0/css/jquery.dataTables.css";
-      $this->view_data['extra_style'][] = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.css";
+      $this->view_data['extra_style'][] = "//cdn.datatables.net/1.10.0/css/jquery.dataTables.css";
     }
     
     return $this;
-  }
-  
-  protected function returnAjaxError($errType, $errMsg)
-  {
-    return [
-        'error' => [
-          'type' => $errType,
-          'message' => $errMsg,
-        ],
-      ];
   }
 
 }
