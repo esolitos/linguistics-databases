@@ -16,7 +16,10 @@ class AddUserInTables extends Migration {
       Schema::table('occurrence_category', function(Blueprint $table)
       {
         $table->integer('user_id')->unsigned()->default('1');
-        
+      });
+      
+      Schema::table('occurrence_category', function(Blueprint $table)
+      {
         $table->foreign('user_id', 'cat_uid')
           ->references('id')->on('user')
           ->onDelete('restrict')->onUpdate('cascade');
@@ -27,7 +30,10 @@ class AddUserInTables extends Migration {
       Schema::table('occurrence', function(Blueprint $table)
       {
         $table->integer('user_id')->unsigned()->default('1');
-        
+      });
+      
+      Schema::table('occurrence', function(Blueprint $table)
+      {
         $table->foreign('user_id', 'occ_uid')
           ->references('id')->on('user')
           ->onDelete('restrict')->onUpdate('cascade');
