@@ -2,38 +2,55 @@
 
 class CategoryController extends \DoubleObjectController {
 
-	/**
-	 * Display a listing of the resource.
-	 * GET /category
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-    return View::make('DoubleObject.Category.listing', $this->view_data);
-	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /category/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-    $this->view_data['objectTypes'] = CategoryObject::allForSelect();
+  public function __construct()
+  {
+    parent::__construct();
     
-    return View::make('DoubleObject.Category.create', $this->view_data);
-	}
+    $this->dataTableStyle = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.css";
+  }
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /category
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
+  /**
+   * Display a listing of the resource.
+   * GET /category
+   *
+   * @return Response
+   */
+  public function index()
+  {
+    $this->view_data['page_title'] = "Categories Management";
+    $this->view_data['page_description'] = "In this page you can view, edit and delete the defined categories.";
+    
+    
+    $this->view_data['extra_scripts'][100] = "/javascript/category.datatables.js";
+    return $this->withDataTables()->makeView('DoubleObject.Category.listing');
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   * GET /category/create
+   *
+   * @return Response
+   */
+  public function create()
+  {
+    $this->view_data['page_title'] = "Create new Category";
+    $this->view_data['page_description'] = "Here you can create a new category in terms of object definition, form, and case.<br>";
+    $this->view_data['page_description'] .= "If none of the categories statisfies you needs just select 'New' and you'll be able to create a new object.";
+    
+    $this->view_data['objectTypes'] = CategoryObject::allForSelect();
+
+    $this->view_data['extra_scripts'][100] = "/javascript/category.create.js";
+    return $this->makeView('DoubleObject.Category.create');
+  }
+   
+  /**
+   * Store a newly created resource in storage.
+   * POST /category
+   *
+   * @return Response
+   */
+  public function store()
+  {
     $category = new OccurrenceCategory([
       'first_object_id' => Input::get('first_object_id'),
       'second_object_id' => Input::get('second_object_id'),
@@ -82,51 +99,58 @@ class CategoryController extends \DoubleObjectController {
       } 
     }
     
+    $category->user_id = Auth::id();
     
     if ($category->save()) {
-      return Redirect::action('CategoryController@index');
+      $message = ["New Category created with success!"];
+      
+      if ( Input::get('submit-insert') ) {
+        return Redirect::action('OccurrenceController@create')->withInput(['category_id'=>$category->id])->withMessages($message);
+      } else {
+        return Redirect::action('CategoryController@create')->withMessages($message);
+      }
     } else {
       return Redirect::back()->withInput()->withErrors($category->errors());
     }
-	}
-
-	/**
-	 * Display the specified resource.
-	 * GET /category/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
+  }
+  
+  /**
+   * Display the specified resource.
+   * GET /category/{id}
+   *
+   * @param  int  $id
+   * @return Response
+   */
+  public function show($id)
+  {
     $this->view_data['category'] = OccurrenceCategory::with('firstObj', 'secondObj')->find($id);
     
-		return View::make('DoubleObject.Category.show', $this->view_data);
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /category/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
+    return $this->makeView('DoubleObject.Category.show');
+  }
+  
+  /**
+   * Show the form for editing the specified resource.
+   * GET /category/{id}/edit
+   *
+   * @param  int  $id
+   * @return Response
+   */
+  public function edit($id)
+  {
     $this->view_data['category'] = OccurrenceCategory::find($id);
     
-		return View::make('DoubleObject.Category.edit', $this->view_data);
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /category/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
+    return $this->makeView('DoubleObject.Category.edit');
+ }
+  
+ /**
+  * Update the specified resource in storage.
+  * PUT /category/{id}
+  *
+  * @param  int  $id
+  * @return Response
+  */
+ public function update($id)
+ {
     $category = OccurrenceCategory::find($id);
     $category->forceEntityHydrationFromInput = true;
     
@@ -135,19 +159,19 @@ class CategoryController extends \DoubleObjectController {
     } else {
       return Redirect::back()->withInput()->withErrors( $category->errors() );
     }
-	}
+  }
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /category/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
+  /**
+   * Remove the specified resource from storage.
+   * DELETE /category/{id}
+   *
+   * @param  int  $id
+   * @return Response
+   */
+  public function destroy($id)
+  {
     if ( Input::get('confirm', FALSE) ) {
-  		OccurrenceCategory::destroy($id);
+      OccurrenceCategory::destroy($id);
       return Redirect::action('CategoryController@index')->withMessages(['Selected Category has been deleted.']);
       
     } else {
@@ -158,8 +182,8 @@ class CategoryController extends \DoubleObjectController {
         'cancel-url' => URL::previous(),
       ];
       
-      return View::make('common.confirm', $this->view_data);
+      return $this->makeView('common.confirm');
     }
-	}
+  }
 
 }

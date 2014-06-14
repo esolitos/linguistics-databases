@@ -1,13 +1,17 @@
-@extends("common.layout")
+@extends("DoubleObject.layout")
 @section("content")
-	<h3>Defined Categories</h3>
+
+  <h3 class="subheader">Defined Categories</h3>
   <div class="listing">
-    <table border="0" cellspacing="0" cellpadding="5">
+    <table class="defined-categories" border="0" cellspacing="0" cellpadding="5">
       <thead>
         <tr>
           <th>First Object</th>
           <th>Second Object</th>
-          <th colspan="3">Actions</th>
+          <th>Creator</th>
+          <th class="actions">&nbsp;</th>
+          <th class="actions">&nbsp;</th>
+          <th class="actions">&nbsp;</th>
         </tr>
       </thead>
       <tbody>
@@ -21,9 +25,10 @@
           @else
             <td>-</td>
           @endif
-          <td class="actions view-occurrences">{{ link_to_route('category.occurrences', 'Occurrences', [$cat->id]) }} </td>
-          <td class="actions edit">{{ link_to_action("CategoryController@edit", "Edit Category", [$cat->id]) }}</td>
-          <td class="actions remove">{{ link_to_route("category.delete", "Remove Category", [$cat->id]) }}</td>
+          <td>{{ $cat->author->username }}</td>
+          <td>{{ link_to_route('category.occurrences', '', [$cat->id], ['class'=>'fi-list-bullet actions view-occurrences', 'title'=>"View Occurrences"]) }} </td>
+          <td>{{ link_to_action("CategoryController@edit", '', [$cat->id], ['class'=>'fi-pencil actions edit', 'title'=>"Edit"]) }}</td>
+          <td>{{ link_to_route("category.delete", '', [$cat->id], ['class'=>'fi-trash actions delete', 'title'=>"Delete"]) }}</td>
         </tr>
       @endforeach
       </tbody>

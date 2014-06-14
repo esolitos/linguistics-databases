@@ -1,14 +1,12 @@
 @include("common.header")
 <div class="content-wrapper row">
   <div class="container">
-    @if( !empty($page_title) )
     <div class="small-12 small-centered columns">
-      <h1 id="page_title">{{ $page_title }}</h1>
+      <h1 id="page_title">{{ empty($page_title) ? 'Double Object Database' : $page_title }}</h1>
       @if( !empty($page_description) )
           <p>{{ $page_description }}</p>
       @endif
     </div>
-    @endif
     @if ( $messages->has('general') )
       <div class="small-10 small-centered columns messages">
         @foreach ($messages->get('general') as $error)

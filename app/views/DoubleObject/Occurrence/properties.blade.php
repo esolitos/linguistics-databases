@@ -1,4 +1,4 @@
-@extends("common.layout")
+@extends("DoubleObject.layout")
 @section("content")
 
 	<h3>Define Object's Properties for Occurrence: {{ $occurrence->id }}</h3>  

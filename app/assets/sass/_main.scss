@@ -6,19 +6,61 @@ a[class^=fi-]::before {
     vertical-align: middle;
 }
 
+table {
+    thead {
+        th.sorting,
+        th.sorting_asc,
+        th.sorting_desc {
+            padding-right: 20px;
+        }
+        th.id {
+            width: 50px;
+        }
+        th.author {
+            width: 150px;
+        }
+        th.actions {
+            width: 50px;
+        }
+    }
+    .actions {
+        &.edit {
+            color: $primary-color-light;
+                
+            &:hover {
+                color: $primary-color-alt;
+            }
+        }
+        &.delete {
+            color: $alert-color;
+
+            &:hover {
+                color: darken($alert-color, 15);
+            }
+        }
+    }
+}
+
+.form-actions {
+    @include grid-column(12);
+    margin-top: 25px;
+    text-align: right;
+}
+
+.columns {
+    .button {
+        margin-top: 6px;
+        &.small{
+            margin-top: 12px;
+        }
+    }
+}
+
 
 div#occurrences-listing-page {
     display: none;
     table {
         thead {
-            th.sorting,
-            th.sorting_asc,
-            th.sorting_desc {
-                padding-right: 20px;
-            }
-            th.o-id {
-                width: 50px;
-            }
             th.o-category {
                 width: 260px;
             }
@@ -31,9 +73,6 @@ div#occurrences-listing-page {
             th.o-corpus {
                 width: 180px;
             }
-            th.actions {
-                width: 50px;
-            }
         }
         tbody {
             a.occurrence-text {
@@ -42,22 +81,6 @@ div#occurrences-listing-page {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-            }
-            .actions {
-                &.edit {
-                    color: $primary-color-light;
-                    
-                    &:hover {
-                        color: $primary-color-alt;
-                    }
-                }
-                &.delete {
-                    color: $alert-color;
-
-                    &:hover {
-                        color: darken($alert-color, 15);
-                    }
-                }
             }
         }
         
@@ -68,6 +91,7 @@ div#occurrences-listing-page {
 //    @include grid-row();
     @include panel();
     
+    .speakers,
     .categories {
         list-style: none;
         margin:0;

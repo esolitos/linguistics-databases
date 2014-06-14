@@ -1,4 +1,4 @@
-@extends("common.layout")
+@extends("DoubleObject.layout")
 @section("content")
 
 	<h3>Edit Category: {{ $category->id }}</h3>

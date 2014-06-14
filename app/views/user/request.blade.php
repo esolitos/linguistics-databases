@@ -1,4 +1,4 @@
-@extends("layout")
+@extends("common.layout")
 @section("content")
   {{ Form::open() }}
     {{ Form::label("email", "Email") }}

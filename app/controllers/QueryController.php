@@ -7,13 +7,13 @@ class QueryController extends \DoubleObjectController {
   {
     $this->view_data['executed_queries'] = Redis::get('tot_queries');
     
-    return View::make('DoubleObject.Query.index', $this->view_data);
+    return $this->makeView('DoubleObject.Query.index');
   }
   
   public function getBuild()
   {
     
-    return View::make('DoubleObject.Query.build', $this->view_data);
+    return $this->makeView('DoubleObject.Query.build');
   }
 
   

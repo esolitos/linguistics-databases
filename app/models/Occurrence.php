@@ -8,7 +8,7 @@ class Occurrence extends Ardent {
   
   protected $hidden = [];
   protected $fillable = ['category_id', 'text', 'verb', 'keyword', 'speaker', 'corpus_file', 'corpus_row'];
-  protected $guarded = ['id'];
+  protected $guarded = ['id', 'user_id'];
   protected $attributes = [];
   /**
   * Ardent
@@ -25,7 +25,8 @@ class Occurrence extends Ardent {
     'corpus_row'  => 'required|integer|min:1',
   );
   public static $relationsData = array(
-    'category' => [self::BELONGS_TO, 'OccurrenceCategory', 'foreignKey'=>'category_id'],
+    'category'  => [self::BELONGS_TO, 'OccurrenceCategory', 'foreignKey'=>'category_id'],
+    'author'    => [self::BELONGS_TO, 'User', 'foreignKey'=>'user_id'],
   );
   
   
