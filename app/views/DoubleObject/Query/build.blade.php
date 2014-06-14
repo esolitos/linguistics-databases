@@ -1,4 +1,4 @@
-@extends("common.layout")
+@extends("DoubleObject.layout")
 @section("content")
 
 <h2>Build New Query</h2>

@@ -14,7 +14,9 @@ class UserController extends \BaseController {
       return Redirect::route("user.profile");
     }
 
-    return View::make("user.login", $this->view_data);
+    $this->view_data['page_title'] = "User Login";
+    
+    return $this->makeView('user.login');
   }
 	
   /**
@@ -48,28 +50,25 @@ class UserController extends \BaseController {
   public function logout()
   {
     Auth::logout();
-    $messages = Session::get('messages', []);
-    $messages[] = "You have signed out successfully. Goodbye!";
-		
-    Session::flash('messages', $messages);
-    return Redirect::route("user.login");
+
+    return Redirect::route("user.login")->withMessages(["You have signed out successfully. Goodbye!"]);
   }
 	
   public function showProfile()
   {
-    return View::make("user.profile", $this->view_data);
+    $this->view_data['page_title'] = "User Profile";
+    return $this->makeView('user.profile');
   }
 
   public function signUp()
   {
-    return "Sign Up";
-    // return View::make("user.login", $this->view_data);
+    return Redirect::route("user.login")->withMessages(["Sign Up currently not Allowed! To continue please login."]);
   }
   
   public function register()
   {
     return "Register";
-    // return View::make("user.login", $this->view_data);
+    // return $this->makeView('user.login');
   }
 
 	

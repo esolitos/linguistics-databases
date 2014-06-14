@@ -1,15 +1,15 @@
-@extends("common.layout")
+@extends("DoubleObject.layout")
 @section("content")
 
-	<h3>Edit Property: {{ $property->id }}</h3>
   {{ Form::open(array('action' => ['ObjectPropertyController@update', $property->id], 'method' => 'PATCH')) }}
 
-  {{ Form::label('name', 'Property Name'); }}
-  {{ Form::text('name', $property->name) }}
-  {{ Form::field_error('name', $errors) }}
-
+  <div class="small-12 columns">
+    {{ Form::label_item_error('text', 'name', "Property Name", $property->name, $errors) }}
+  </div>
+  
   <div class="form-actions">
-    {{ Form::submit('Save Changes', ['class'=>"button"]) }}
+    {{ link_to_action("ObjectPropertyController@index", 'Cancel', null, ['class'=>"small button secondary"]) }}
+    {{ Form::submit('Save Changes', ['class'=>"small button"]) }}
   </div>
   
   {{ Form::close() }}

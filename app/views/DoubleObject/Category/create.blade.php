@@ -1,17 +1,14 @@
-@extends("common.layout")
+@extends("DoubleObject.layout")
 @section("content")
-	<h3>Create new Category</h3>
+  
+  <h3 class="subheader">Category Definition</h3>
   {{ Form::open(array('action' => 'CategoryController@store')) }}
 
-  <div class="row">
-    <div class="small-12 columns">
-      {{ Form::label('first_object_id', 'Select first Object'); }}
-      {{ Form::select('first_object_id', CategoryObject::allForSelect([''=>"Select One", 'new'=>"Define New"])) }}
-      {{ Form::field_error('first_object_id', $errors) }}
-    </div>
+  <div class="small-12 columns">    
+    {{ Form::label_select_error('first_object_id', "Select first Object", CategoryObject::allForSelect([''=>"Select One", 'new'=>"Define New"]), $errors) }}    
   </div>
   
-  <div class="panel row hide">
+  <div class="small-12 columns panel hide" id="first_object_panel">
     <div class="small-12 columns">
       <p>&hellip; if not present define e new combination:</p>
     </div>
@@ -32,15 +29,11 @@
     </div>
   </div>
   
-  <div class="row">
-    <div class="small-12 columns">
-      {{ Form::label('second_object_id', 'Select second Object'); }}
-      {{ Form::select('second_object_id', CategoryObject::allForSelect(['none'=>"None", 'new'=>"Define New"]) ) }}
-      {{ Form::field_error('second_object_id', $errors) }}
-    </div>
+  <div class="small-12 columns">
+    {{ Form::label_select_error('second_object_id', "Select second Object", CategoryObject::allForSelect(['none'=>"None", 'new'=>"Define New"]), $errors) }}
   </div>
   
-  <div class="panel row hide">
+  <div class="small-12 columns panel hide" id="second_object_panel">
     <div class="small-12 columns">
       <p>&hellip; if not present define e new combination:</p>
     </div>
@@ -62,7 +55,8 @@
   </div>
 
   <div class="form-actions">
-    {{ Form::submit('Create &rarr;', ['class'=>'button']) }}
+    {{ Form::submit('Create &amp; continue', ['class'=>'small button', 'name'=>'submit-continue']) }}
+    {{ Form::submit('Create &amp; Insert Occurrences &rarr;', ['class'=>'small button secondary', 'name'=>'submit-insert']) }}
   </div>
   {{ Form::close() }}
 

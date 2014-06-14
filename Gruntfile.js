@@ -48,7 +48,8 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'public/javascript/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                    'public/javascript/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>'],
+                    'public/javascript/app.min.js': ['./app/assets/js/app.js']
                 }
             }
         },
@@ -67,11 +68,11 @@ module.exports = function(grunt) {
         watch: {
             scss: {
                 files: './app/assets/sass/*.scss',
-                tasks: ['compass']
+                tasks: ['compass:dev']
             },
             js: {
                 files: './app/assets/js/*.js',
-                tasks: ['copy']
+                tasks: ['copy:dev']
             }
         }
     });

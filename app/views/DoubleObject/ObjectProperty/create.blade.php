@@ -1,15 +1,15 @@
-@extends("common.layout")
+@extends("DoubleObject.layout")
 @section("content")
 
-	<h3>Create new Object Property</h3>
+  <h3 class="subheader">Property Definition</h3>
   {{ Form::open(array('action' => 'ObjectPropertyController@store')) }}
 
-  {{ Form::label('name', 'Property Name'); }}
-  {{ Form::text('name') }}
-  {{ Form::field_error('name', $errors) }}
+  <div class="small-12 columns">
+    {{ Form::label_item_error('text', 'name', "Property Name", null, $errors) }}
+  </div>
 
   <div class="form-actions">
-    {{ Form::submit('Careate &rarr;', ['class'=>"button"]) }}
+    {{ Form::submit('Careate &rarr;', ['class'=>"small button"]) }}
   </div>
   {{ Form::close() }}
 

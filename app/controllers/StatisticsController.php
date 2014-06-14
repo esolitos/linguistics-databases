@@ -61,7 +61,7 @@ class StatisticsController extends \DoubleObjectController {
     unset($occurr_per);
     unset($props);
     
-    return View::make('DoubleObject.Statistics.index', $this->view_data);
+    return $this->makeView('DoubleObject.Statistics.index');
 	}
 
 }

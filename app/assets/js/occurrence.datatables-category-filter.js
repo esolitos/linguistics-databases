@@ -1,14 +1,16 @@
-$().ready( function () {
+jQuery().ready( function ($) {
     var $table = $('table.occurrences-listing');
     
     var table = $table.DataTable({
         deferRender: true,
         order: [[1, 'asc']],
         columnDefs: [
-            { "targets": [0, -2, -1], "searchable": false, "orderable": false },
-            { "targets": 'ID', "searchable": false, "orderable": false }
+            { "targets": [-2, -1], "searchable": false, "orderable": false },
+            { "targets": 'ID', "searchable": false, "orderable": false },
+            { "targets": [4, 5], "searchable": true, "visible": false, "orderable": false }
         ],
         initComplete: function () {
+            this.css('width', "100%");
             $("#occurrences-listing-page").fadeIn('slow');
         }
         
@@ -20,6 +22,12 @@ $().ready( function () {
         categories_filter.append( '<li><label><input id="filter-cat-list-'+j+'" type="checkbox" name="categories" value="'+d+'"> '+d+'</label></li>');
     } );
 
+
+    $("#filter-area .speakers input[name=speaker]").on('change', function(){
+        $('.speakers .selected').removeClass('selected');
+        this.parentNode.classList.add('selected');
+        table.column( 4 ).search( this.value ).draw();
+    } );
 
 
     $("#filter-area .categories input[type=checkbox]").on( 'change', function(){
@@ -42,4 +50,5 @@ $().ready( function () {
         
         this.parentNode.classList.toggle('selected');
     } );
+
 } );

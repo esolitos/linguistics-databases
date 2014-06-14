@@ -22,7 +22,7 @@ class DoubleObjectController extends \BaseController {
 
   public function index()
   {
-    return View::make('DoubleObject/index', $this->view_data);
+    return $this->makeView('DoubleObject/index');
   }
 
 }
