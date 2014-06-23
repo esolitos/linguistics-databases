@@ -123,6 +123,7 @@ return array(
     'Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider',
     'Menu\MenuServiceProvider',
     'VivifyIdeas\Acl\AclServiceProvider',
+    'Stevenmaguire\Foundation\FoundationServiceProvider',
   ),
 
   /*

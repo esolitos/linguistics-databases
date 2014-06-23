@@ -11,6 +11,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:esolitos/laravel-acl.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:esolitos/zurb-foundation-laravel.git"
         }
     ],
 	"require": {
@@ -18,7 +22,8 @@
         "laravelbook/ardent": "2.4.*",
         "felixkiss/uniquewith-validator": "1.0.*",
         "vespakoen/menu": "2.0.*",
-        "vivify-ideas/acl": "dev-master"
+        "vivify-ideas/acl": "dev-master",
+        "stevenmaguire/zurb-foundation-laravel": "dev-develop"
 	},
     "require-dev": {
         "way/generators": "2.*",

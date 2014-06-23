@@ -7,7 +7,7 @@ class OccurrenceObjectProperty extends Ardent {
   public $timestamps = FALSE;
   
   protected $hidden = [];
-  protected $fillable = ['occurrence_id', 'type', 'property_id'];
+  protected $fillable = ['occurrence_id', 'type', 'property_id', 'position'];
   protected $guarded = [];
   protected $attributes = [];
   /**
@@ -19,6 +19,7 @@ class OccurrenceObjectProperty extends Ardent {
     'occurrence_id' => 'required|exists:occurrence,id|unique_with:occurrence_object_property,type,property_id',
     'type' => 'required|in:IND,DIR', 
     'property_id' => 'required|exists:object_property,id',
+    'position' => 'required|in:0,1,2',
   ];
   
   public static $relationsData = [

@@ -30,7 +30,7 @@ class OccurrenceCategory extends Ardent {
   {
     $categories = empty($include) ? [] : $include;
     
-    foreach (OccurrenceCategory::with(['firstObj', 'secondObj'])->remember(1)->get() as $elem) {
+    foreach (OccurrenceCategory::with(['firstObj', 'secondObj'])->get() as $elem) {
       $first_prep = ($elem->firstObj->has_preposition) ? 'P': '-';
       
       if ( $elem->secondObj ) {
@@ -55,5 +55,17 @@ class OccurrenceCategory extends Ardent {
   public function secondObj()
   {
     return $this->belongsTo('CategoryObject', 'second_object_id', 'id');
+  }
+  
+  public function getObjectPos($type)
+  {
+    if ( $this->firstObj->type === $type ) {
+      return 1;
+    }
+    else if ( $this->secondObj !== NULL && $this->secondObj->type === $type ) {
+      return 2;
+    }
+    
+    return 0;
   }
 }

@@ -219,13 +219,17 @@ class OccurrenceController extends \DoubleObjectController {
   private function storeProperties($occurrence)
   {
     $property_rows = [];
+    $occurrenceObj = Occurrence::find($occurrence);
+    
     foreach ($this->propStorage as $prop_type => $properties) {
-      $properties = array_diff( array_unique($properties, SORT_NUMERIC), Occurrence::find($occurrence)->propertyIDs($prop_type));
+      $properties = array_diff( array_unique($properties, SORT_NUMERIC), $occurrenceObj->propertyIDs($prop_type));
+      $position = $occurrenceObj->category->getObjectPos($prop_type);
       foreach($properties as $pid) {
         $property_rows[] = [
           'occurrence_id' => $occurrence,
           'type'          => $prop_type,
           'property_id'   => $pid,
+          'position'      => $position, 
         ];
       }
     }

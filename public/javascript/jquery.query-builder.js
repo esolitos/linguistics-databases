@@ -75,6 +75,34 @@ jQuery(document).ready(function($) {
     
     $("#verify-built-query").click(function(event) {
         event.preventDefault();
+        console.log(JSON.stringify(query));
+        $.ajax('/double-object/query/verify', {
+          type: 'POST',
+          dataType: 'json',
+          data: {
+              _token: $("input[name=_token]").val(),
+              query_structure: query
+          },
+          success: function(data, textStatus, xhr) {
+              console.log(data);
+              
+              if ( typeof data.error !== 'undefined' ) {
+                  showAlertBox({
+                      title: "Error on: " + data.error.type,
+                      message: data.error.message
+                  });
+              }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              // console.error(textStatus);
+              // console.error(errorThrown);
+              showAlertBox({
+                  title: "Verification Error",
+                  message: errorThrown
+              });
+          }
+      });
+        
     });
     
     $('select[name=category-op]').change(function(event) {
@@ -271,5 +299,43 @@ jQuery(document).ready(function($) {
         return valueText;
     }
     
-    
+   
+   
+    function showAlertBox(options) {
+        var setup = {
+            closeIcon: '<a href="#" class="close">&times;</a>',
+            // Remove (or not) old messages.
+            cleanup: true,
+            // Scrolls (or not) to the message area.
+            scroll: true,
+            // selecgtor where to append the message
+            destination: ".content-wrapper .messages-region",
+            // Type of the alert box: "success", "warning", "info", "alert",
+            //  "secondary", "error" or empty string for default box
+            type: 'error',
+            // Actual message to display in the box
+            message: 'Unexpected Error.'
+        };
+        jQuery.extend( setup, options );
+        
+        if ( setup.cleanup ) {
+            $( setup.destination + " .ajax-alert").remove();
+        }
+        
+        // Creating and adding the message box
+        $("<div/>").attr({
+            'data-alert': true,
+            'class': 'ajax-alert alert-box radius ' + setup.type,
+        // }).html( '<h4>' + setup.title + '</h4>' + setup.message )
+        }).text( setup.message )
+        .append( setup.closeIcon )
+        .appendTo( setup.destination );
+        
+        if ( setup.scroll ) {
+            $('html, body').animate({
+                scrollTop: $(".title-region").offset().top
+            }, 'slow');
+        }
+    }
+
 });

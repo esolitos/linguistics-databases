@@ -4,7 +4,7 @@
 <h2>Build New Query</h2>
 
 <div class="db-query-page">
-  {{ Form::open([ 'action'=> "QueryController@postVerify", 'id'=>'db-query-form' ]) }}
+  {{ Form::open([ 'action'=> "QueryController@postVerify"]) }}
   
   <div id="query-build-area" class="row">
     <fieldset id="select-output" class="output-selection-area">
@@ -94,6 +94,6 @@
   {{ Form::close() }}
 </div>
 <div class="hide script-area">
-  <script type="text/javascript" src="/javascript/jquery.query-builder.js"></script>
+  <!-- <script type="text/javascript" src="/javascript/jquery.query-builder.js"></script> -->
 </div>
 @stop

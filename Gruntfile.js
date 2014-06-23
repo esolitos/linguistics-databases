@@ -72,7 +72,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: './app/assets/js/*.js',
-                tasks: ['copy:dev']
+                tasks: ['newer:copy:dev']
             }
         }
     });
@@ -81,6 +81,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    
+    grunt.loadNpmTasks('grunt-newer');
 
     grunt.registerTask('default', ['concat:dev', 'copy:dev', 'compass:dev', 'watch']);
     grunt.registerTask('dist', ['concat:dist', 'copy:dist', 'compass:dist', 'uglify:dist']);

@@ -2160,18 +2160,18 @@ dl {
 
 /* line 251, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ul, ol {
-  margin-left: 0;
+  margin-left: 1.1rem;
 }
 /* line 253, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ul.no-bullet, ol.no-bullet {
-  margin-left: 0;
+  margin-left: 1.1rem;
 }
 
 /* Unordered Lists */
 /* line 260, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ul li ul,
 ul li ol {
-  margin-left: 1.25em;
+  margin-left: 1.25rem;
   margin-bottom: 0;
   font-size: 1em;
   /* Override nested font-size change */
@@ -2201,7 +2201,7 @@ ul.no-bullet {
 /* line 282, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ol li ul,
 ol li ol {
-  margin-left: 1.25em;
+  margin-left: 1.25rem;
   margin-bottom: 0;
 }
 
@@ -7359,11 +7359,11 @@ table .actions.delete:hover {
 
 /* line 51, ../../app/assets/sass/_main.scss */
 .columns .button {
-  margin-top: 6px;
+  margin-top: 12px;
 }
 /* line 53, ../../app/assets/sass/_main.scss */
 .columns .button.small {
-  margin-top: 12px;
+  margin-top: 6px;
 }
 
 /* line 60, ../../app/assets/sass/_main.scss */

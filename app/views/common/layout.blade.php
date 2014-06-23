@@ -2,7 +2,7 @@
 <div class="content-wrapper row">
   <div class="container">
     @if( !empty($page_title) )
-    <div class="small-12 small-centered columns">
+    <div class="small-12 small-centered columns title-region">
       <h1 id="page_title">{{ $page_title }}</h1>
       @if( !empty($page_description) )
           <p>{{ $page_description }}</p>

@@ -45,7 +45,7 @@ class Occurrence extends Ardent {
   
   public function propertyIDs($type = '%')
   {
-    return array_flatten($this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type)->get(['property_id'])->toArray());
+    return $this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type)->lists('property_id');
   }
   
   public function properties($type = '%')
