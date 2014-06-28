@@ -15,23 +15,35 @@ class User extends Ardent implements UserInterface, RemindableInterface {
   public $timestamps = true;
 
   protected $hidden = ['password'];
-  protected $fillable = ['username', 'email'];
-  protected $guarded = ['id', 'password', 'remember_token'];
+  protected $fillable = ['username', 'email', 'full_name', 'profession', 'password', 'password_confirmation',];
+  protected $guarded = ['id', 'password', 'remember_token',];
 	
   /**
   * Ardent
   */
   public $autoPurgeRedundantAttributes = true;
   public static $rules = array(
-    'username' => 'required|between:4,50|unique:user',
-    'email' => 'required|email|unique:user',
-    'password' => 'required|alpha_num|min:8|confirmed',
-    'password_confirmation' => 'required|alpha_num|min:8',
+    'username'    => 'required|between:4,100|unique:user',
+    'full_name'   => 'required|between:5,100',
+    'profession'  => 'between:4,50',
+    'email'       => 'required|email|unique:user'
   );
+  
   public static $relationsData = array(
     'categories'  => [self::HAS_MANY, 'OccurrenceCategory', 'otherKey'=>'user_id'],
     'occurrences' => [self::HAS_MANY, 'Occurrence', 'otherKey'=>'user_id'],
   );
+  
+  
+  public static function addPasswordRules()
+  {
+    $extra_rules = [
+      'password'              => 'required|alpha_num|min:8|confirmed',
+      'password_confirmation' => 'required|alpha_num|min:8',
+    ];
+    
+    self::$rules = self::$rules + $extra_rules;
+  }
 
   /**
    * Get the unique identifier for the user.

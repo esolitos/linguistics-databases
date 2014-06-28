@@ -24,6 +24,10 @@ Route::group(array('prefix' => 'user'), function() {
 
   Route::get("sign-up", [ "as"   => "user.register", "uses" => "UserController@signUp" ]);
   Route::post("sign-up", [ "as"   => "user.register", "uses" => "UserController@register" ]);
+  
+  Route::resource("admin", 'UserAdminController');
+  Route::get('admin/{id}/delete', ['as'=>'user.delete', 'uses'=>'UserAdminController@destroy']);
+  
 });
 
 

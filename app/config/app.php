@@ -123,6 +123,7 @@ return array(
     'Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider',
     'Menu\MenuServiceProvider',
     'VivifyIdeas\Acl\AclServiceProvider',
+    'Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider',
     'Stevenmaguire\Foundation\FoundationServiceProvider',
   ),
 
@@ -193,6 +194,7 @@ return array(
     'Ardent'          => 'LaravelBook\Ardent\Ardent',
     'Menu'            => 'Menu\Menu',
     'Acl'             => 'VivifyIdeas\Acl\Facades\Acl',
+    'Gravatar'        => 'Thomaswelton\LaravelGravatar\Facades\Gravatar',
   ),
 
 );

@@ -23,7 +23,8 @@
         "felixkiss/uniquewith-validator": "1.0.*",
         "vespakoen/menu": "2.0.*",
         "vivify-ideas/acl": "dev-master",
-        "stevenmaguire/zurb-foundation-laravel": "dev-develop"
+        "thomaswelton/laravel-gravatar": "0.0.*",
+        "stevenmaguire/zurb-foundation-laravel": "dev-foundation-five"
 	},
     "require-dev": {
         "way/generators": "2.*",
