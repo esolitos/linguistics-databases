@@ -18,19 +18,6 @@ class BaseController extends Controller {
     Menu::handler('top-menu-right', array('class' => 'right'));
     Menu::handler('top-menu-left', array('class' => 'left'));
     
-    if ( Auth::check() ) {
-      $user_options = Menu::items(null, ['class' => "dropdown"])
-        ->add( route('user.profile') , 'Profile')
-        ->add( route('user.logout') , 'Sign Out');
-    } else {
-      $user_options = Menu::items(null, ['class' => "dropdown"])
-        ->add( route('user.login') , 'Sign In')
-        ->add( route('user.register') , 'Sign Up');
-    }
-    Menu::handler('top-menu-right')
-      ->add( action('StatisticsController@getIndex') , 'User', $user_options, [], ['class' => "user-links has-dropdown"] );
-    
-    
     Form::macro('form_checkbox', function($name, $value, $label, $checked = null, $options = array())
     {
       $id = $name;
@@ -145,7 +132,6 @@ class BaseController extends Controller {
   protected function withDataTables($style='')
   {
     $this->view_data['extra_scripts'][] = "//cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js";
-    $this->view_data['extra_scripts'][] = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.js";
     $this->view_data['extra_scripts'][] = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.js";
     
     if ( !empty( $this->dataTableStyle ) ) {

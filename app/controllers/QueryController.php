@@ -12,6 +12,7 @@ class QueryController extends \DoubleObjectController {
 
   public function __construct()
   {
+    $this->dataTableStyle = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.css";
     $this->beforeFilter('csrf', array('on' => 'post'));
     
     parent::__construct();

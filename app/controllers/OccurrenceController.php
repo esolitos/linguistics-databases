@@ -65,7 +65,7 @@ class OccurrenceController extends \DoubleObjectController {
     if ( $occurrence->save() ) {
       
       if ( Input::has('set-properties') ) {
-        return Redirect::action('OccurrenceController@defineObjectProperties', $occurrence->id);
+        return Redirect::route('occurrence.objectProperties', $occurrence->id);
         
       } else {
         return Redirect::back()->withMessages(['Occurrence inserted successfully.']);
