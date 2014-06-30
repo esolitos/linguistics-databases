@@ -18,6 +18,7 @@ class BaseController extends Controller {
     Menu::handler('top-menu-right', array('class' => 'right'));
     Menu::handler('top-menu-left', array('class' => 'left'));
     
+
     Form::macro('form_checkbox', function($name, $value, $label, $checked = null, $options = array())
     {
       $id = $name;
@@ -29,6 +30,8 @@ class BaseController extends Controller {
       
       return '<label for="'.$id.'">'.Form::checkbox($name, $value, $checked, $options).' '.$label.'</label>';
     });
+
+
     
     Form::macro('field_error', function($field, $errors){
         if($errors->has($field)){
