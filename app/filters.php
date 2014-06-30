@@ -78,3 +78,23 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| ACL Filter
+|--------------------------------------------------------------------------
+|
+| Chek permission for every route.
+| ref. https://github.com/Vivify-Ideas/laravel-acl
+|
+*/
+
+Route::filter('acl', function($route, $request)
+{
+  // we need this because laravel delete form sends POST request with {_method: 'DELETE'} as parameter
+  $method = $request->has('_method') ? $request->input('_method') : $request->server('REQUEST_METHOD');
+
+  if (!Acl::checkRoute($method, $request->server('REQUEST_URI'))) {
+    App::abort(403);
+  }
+});

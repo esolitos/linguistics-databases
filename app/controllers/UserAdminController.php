@@ -11,7 +11,7 @@ class UserAdminController extends \BaseController {
   
   /**
    * Display a listing of the resource.
-   * GET /user/admin
+   * GET /admin/users
    *
    * @return Response
    */
@@ -28,7 +28,7 @@ class UserAdminController extends \BaseController {
 
   /**
    * Show the form for creating a new resource.
-   * GET /user/admin/create
+   * GET /admin/users/create
    *
    * @return Response
    */
@@ -46,7 +46,7 @@ class UserAdminController extends \BaseController {
 
   /**
    * Store a newly created resource in storage.
-   * POST /user/admin
+   * POST /admin/users
    *
    * @return Response
    */
@@ -70,7 +70,7 @@ class UserAdminController extends \BaseController {
 
   /**
    * Display the specified resource.
-   * GET /user/admin/{id}
+   * GET /admin/users/{id}
    *
    * @param  int  $id
    * @return Response
@@ -87,7 +87,7 @@ class UserAdminController extends \BaseController {
 
   /**
    * Show the form for editing the specified resource.
-   * GET /user/admin/{id}/edit
+   * GET /admin/users/{id}/edit
    *
    * @param  int  $id
    * @return Response
@@ -103,13 +103,14 @@ class UserAdminController extends \BaseController {
     $this->view_data['create'] = FALSE;
     $this->view_data['admin_edit'] = TRUE;
     $this->view_data['user'] = User::find($id);
+    $this->view_data['user']->roles = Acl::user($id)->getUserRoles();
     
     return $this->makeView('user.edit');
   }
 
   /**
    * Update the specified resource in storage.
-   * PUT /user/admin/{id}
+   * PUT /admin/users/{id}
    *
    * @param  int  $id
    * @return Response
@@ -118,6 +119,9 @@ class UserAdminController extends \BaseController {
   {
     $user = User::find($id);
     $user->forceEntityHydrationFromInput = true;
+    
+    $roles = Input::get('user_roles');
+    Acl::setUserRoles($id, $roles);
     
     if ( $user->updateUniques() ) {
       return Redirect::action('UserAdminController@index')->withMessages(['User updated successfully.']);
@@ -128,7 +132,7 @@ class UserAdminController extends \BaseController {
 
   /**
    * Remove the specified resource from storage.
-   * DELETE /user/admin/{id}
+   * DELETE /admin/users/{id}
    *
    * @param  int  $id
    * @return Response

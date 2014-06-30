@@ -17,6 +17,31 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
+    | Eloquent: Users Table
+    |--------------------------------------------------------------------------
+    |
+    | Insert here the table containing the users.
+    | It will be used to create foreign keys in the database
+    |
+    | Currently used only by the provider "eloquent".
+    |
+    */
+    'users_table' => 'user',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Eloquent: Create Foreign Keys
+    |--------------------------------------------------------------------------
+    |
+    | Specify if the eloquent permissions provider should use foreign keys.
+    |
+    | Used only if the provider is "eloquent".
+    |
+    */
+    'use_foreign_key' => TRUE,
+
+    /*
+    |--------------------------------------------------------------------------
     | Super users array
     |--------------------------------------------------------------------------
     |
@@ -50,7 +75,7 @@ return array(
                 'id' => 'CREATE_USER',
                 'name' => 'Create User',
                 'allowed' => false,
-                'route' => array('GET:/admin/users/create', 'POST:/admin/users'),
+                'route' => array('GET:/user/admin/create', 'POST:/user/admin'),
                 'resource_id_required' => false,
                 'group_id' => 'MANAGE_USERS'
             ),
@@ -59,11 +84,11 @@ return array(
                 'name' => 'Edit User',
                 'allowed' => false,
                 'route' => array(
-                    'GET:/admin/users/(\d+)/edit',
-                    'PUT:/admin/users/(\d+)',
-                    'GET:/admin/users/(\d+)/permissions',
-                    'PUT:/admin/users/(\d+)/permissions',
-                    'PUT:/admin/users/(\d+)/member-type'
+                    'GET:/user/admin/(\d+)/edit',
+                    'PUT:/user/admin/(\d+)',
+                    'GET:/user/admin/(\d+)/permissions',
+                    'PUT:/user/admin/(\d+)/permissions',
+                    'PUT:/user/admin/(\d+)/member-type'
                 ),
                 'resource_id_required' => true,
                 'group_id' => 'MANAGE_USERS'
@@ -72,61 +97,9 @@ return array(
                 'id' => 'DELETE_USER',
                 'name' => 'Delete User',
                 'allowed' => false,
-                'route' => array('DELETE:/admin/users/(\d+)'),
+                'route' => array('DELETE:/user/admin/(\d+)'),
                 'resource_id_required' => true,
                 'group_id' => 'MANAGE_USERS'
-            ),
-
-            // products
-            array(
-                'id' => 'CREATE_PRODUCT',
-                'name' => 'Create Product',
-                'allowed' => false,
-                'route' => array('GET:/admin/products/create', 'POST:/admin/products$'),
-                'resource_id_required' => false,
-                'group_id' => 'MANAGE_PRODUCTS'
-            ),
-            array(
-                'id' => 'EDIT_PRODUCT',
-                'name' => 'Edit Product',
-                'allowed' => false,
-                'route' => array('GET:/admin/products/(\d+)/edit', 'PUT:/admin/products/(\d+)', 'GET:/admin/products/(\d+)/speakers'),
-                'resource_id_required' => true,
-                'group_id' => 'MANAGE_PRODUCTS'
-            ),
-            array(
-                'id' => 'DELETE_PRODUCT',
-                'name' => 'Delete Product',
-                'allowed' => false,
-                'route' => array('DELETE:/admin/products/(\d+)'),
-                'resource_id_required' => true,
-                'group_id' => 'MANAGE_PRODUCTS'
-            ),
-
-            // assets
-            array(
-                'id' => 'CREATE_ASSET',
-                'name' => 'Create Asset',
-                'allowed' => false,
-                'route' => array('GET:/admin/products/(\d+)/assets/create', 'POST:/admin/products/(\d+)/assets$'),
-                'resource_id_required' => true,
-                'group_id' => 'MANAGE_ASSETS'
-            ),
-            array(
-                'id' => 'EDIT_ASSET',
-                'name' => 'Edit Asset',
-                'allowed' => false,
-                'route' => array('GET:/admin/products/\d+/assets/(\d+)/edit', 'PATCH:/admin/products/\d+/assets/(\d+)'),
-                'resource_id_required' => true,
-                'group_id' => 'MANAGE_ASSETS'
-            ),
-            array(
-                'id' => 'DELETE_ASSET',
-                'name' => 'Delete Asset',
-                'allowed' => false,
-                'route' => array('DELETE:/admin/products/\d+/assets/(\d+)'),
-                'resource_id_required' => true,
-                'group_id' => 'MANAGE_ASSETS'
             ),
 
             // categories
@@ -155,32 +128,6 @@ return array(
                 'group_id' => 'MANAGE_CATEGORIES'
             ),
 
-            // bundles
-            array(
-                'id' => 'CREATE_BUNDLE',
-                'name' => 'Create Bundle',
-                'allowed' => false,
-                'route' => array('GET:/admin/bundles/create', 'POST:/admin/bundles'),
-                'resource_id_required' => false,
-                'group_id' => 'MANAGE_BUNDLES'
-            ),
-            array(
-                'id' => 'EDIT_BUNDLE',
-                'name' => 'Edit Bundle',
-                'allowed' => false,
-                'route' => array('GET:/admin/bundles/(\d+)/edit', 'PUT:/admin/bundles/(\d+)'),
-                'resource_id_required' => true,
-                'group_id' => 'MANAGE_BUNDLES'
-            ),
-            array(
-                'id' => 'DELETE_BUNDLE',
-                'name' => 'Delete Bundle',
-                'allowed' => false,
-                'route' => array('DELETE:/admin/bundles/(\d+)'),
-                'resource_id_required' => true,
-                'group_id' => 'MANAGE_BUNDLES'
-            ),
-
             // Account Settings
             array(
                 'id' => 'EDIT_ACCOUNT_SETTINGS',
@@ -190,19 +137,68 @@ return array(
                 'resource_id_required' => false,
                 'group_id' => 'ADMIN_PRIVILEGES'
             ),
-
-            // Newsletters
-            array(
-                'id' => 'MANAGE_NEWSLETTERS',
-                'name' => 'Manage Newsletters',
-                'allowed' => false,
-                'route' => '.*:/admin/newsletters',
-                'resource_id_required' => false,
-                'group_id' => 'ADMIN_PRIVILEGES'
-            ),
         ),
     */
-    'permissions' => array(),
+    
+    'permissions' => array(
+      
+      array(
+        'id' => 'VIEW_OTHER_USER',
+        'name' => 'View other Users',
+        'allowed' => false,
+        'route' => array(
+          'GET:/admin/users',
+          'GET:/user/show/(\d+)',
+        ),
+        'resource_id_required' => false,
+        'group_id' => 'MANAGE_USERS'
+      ),
+      array(
+        'id' => 'CREATE_USER',
+        'name' => 'Create User',
+        'allowed' => false,
+        'route' => array(
+          'GET:/admin/users/create',
+          'POST:/admin/users/create',
+        ),
+        'resource_id_required' => false,
+        'group_id' => 'MANAGE_USERS'
+      ),
+      array(
+        'id' => 'EDIT_USER',
+        'name' => 'Edit User',
+        'allowed' => false,
+        'route' => array(
+          'GET:/admin/users/(\d+)/edit',
+          'PUT:/admin/users/(\d+)',
+        ),
+        'resource_id_required' => true,
+        'group_id' => 'MANAGE_USERS'
+      ),
+      array(
+        'id' => 'DELETE_USER',
+        'name' => 'Delete User',
+        'allowed' => false,
+        'route' => array(
+          'GET:/admin/users/(\d+)/delete',
+          'DELETE:/admin/users/(\d+)',
+        ),
+        'resource_id_required' => true,
+        'group_id' => 'MANAGE_USERS'
+      ),
+      array(
+        'id' => 'EDIT_USER_PERM',
+        'name' => 'Edit User',
+        'allowed' => false,
+        'route' => array(
+          'GET:/admin/users/(\d+)/permissions',
+          'PUT:/admin/users/(\d+)/permissions',
+          'PUT:/admin/users/(\d+)/member-type'
+        ),
+        'resource_id_required' => true,
+        'group_id' => 'MANAGE_USERS'
+      ),
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -223,19 +219,7 @@ return array(
                     array(
                         'id' => 'MANAGE_USERS',
                         'name' => 'Manage Users',
-                        'route' => 'GET:/admin/users'
-                    ),
-                    array(
-                        'id' => 'MANAGE_PRODUCTS',
-                        'name' => 'Manage Products',
-                        'route' => 'GET:/admin/products',
-                        'children' => array(
-                            array(
-                                'id' => 'MANAGE_ASSETS',
-                                'name' => 'Manage Assets',
-                                'route' => 'GET:/admin/products/\d+/assets'
-                            ),
-                        )
+                        'route' => 'GET:/user/admin'
                     ),
                     array(
                         'id' => 'MANAGE_CATEGORIES',
@@ -251,7 +235,21 @@ return array(
             )
         ),
     */
-    'groups' => array(),
+    'groups' => array(
+      array(
+        'id' => 'ADMIN_PRIVILEGES',
+        'name' => 'Administrative Privileges',
+        'route' => 'GET:/admin',
+
+        'children' => array(
+          array(
+            'id' => 'MANAGE_USERS',
+            'name' => 'Manage Users',
+            'route' => 'GET:/admin/users'
+          ),
+        ),
+      ),
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -274,7 +272,28 @@ return array(
             )
        ),
    */
-    'roles' => array(),
+    'roles' => array(
+      [
+        'id' => 'ADMIN',
+        'name' => 'Administrator',
+      ],
+      [
+        'id' => 'LINGUIST',
+        'name' => 'Linguist',
+      ],
+      [
+        'id' => 'RESEARCHER',
+        'name' => 'Researcher',
+      ],
+      [
+        'id' => 'ASSISTANT',
+        'name' => 'Assistant',
+      ],
+      [
+        'id' => 'VISITOR',
+        'name' => 'Visitor',
+      ],
+    ),
 
 );
 
