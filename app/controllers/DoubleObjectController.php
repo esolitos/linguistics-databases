@@ -25,8 +25,12 @@ class DoubleObjectController extends \BaseController {
       ->add( action('ObjectPropertyController@index') , 'Object Properties', $propertySubmenu, [], $li_attr)
       ->add( action('OccurrenceController@index') , 'Occurrence', $occurrenceSubmenu, [], $li_attr );
 
+
+    $querySubmenu = Menu::items(null, $ul_attr)
+      ->add( action('QueryController@anyPropertyDistribution'), 'Property Distribution');
+    
     Menu::handler('top-menu-right')
-      ->add( action('QueryController@getIndex') , 'Query DB', null, [], [] )
+      ->add( action('QueryController@getIndex') , 'Query DB', $querySubmenu, [], $li_attr)
       ->add( action('StatisticsController@getIndex') , 'Statistics', null, [], [] );
 
   }
