@@ -150,3 +150,22 @@ div#occurrences-listing-page {
     }   
     
 }
+
+#property-distribution-listing {
+  th, td {
+    text-align: center;
+  }
+  
+  th.category,
+  td.category-name {
+    min-width: 270px;
+    text-align: left;
+  }
+  
+  th.category span {
+    display: inline-block;
+    margin:0;
+    padding:0;
+    width: 50%;
+  }
+}

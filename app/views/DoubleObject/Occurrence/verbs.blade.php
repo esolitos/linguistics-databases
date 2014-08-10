@@ -20,7 +20,7 @@
               <td>{{ ucwords($aVerb['verb']) }}</td>
               <td>{{ $aVerb['count'] }}</td>
               <td class="action view">{{ link_to_action("OccurrenceController@getBy", '&nbsp;',['verb', $aVerb['verb']], ['class'=>'fi-list-bullet actions view-occurrences', 'title'=>"View Occurrences"]) }}</td>
-              <td class="action view">{{ link_to_action("QueryController@anyPropertyDistribution", '&nbsp;',['verb', $aVerb['verb']], ['class'=>'fi-graph-bar actions', 'title'=>"View Occurrences"]) }}</td>
+              <td class="action view">{{ link_to_action("QueryController@anyPropertyDistribution", '&nbsp;',[$aVerb['verb']], ['class'=>'fi-graph-bar actions', 'title'=>"View Occurrences"]) }}</td>
             </tr>
           @endforeach
         </tbody>

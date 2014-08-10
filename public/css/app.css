@@ -2159,18 +2159,18 @@ dl {
 
 /* line 251, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ul, ol {
-  margin-left: 0;
+  margin-left: 1.1rem;
 }
 /* line 253, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ul.no-bullet, ol.no-bullet {
-  margin-left: 0;
+  margin-left: 1.1rem;
 }
 
 /* Unordered Lists */
 /* line 260, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ul li ul,
 ul li ol {
-  margin-left: 1.25em;
+  margin-left: 1.25rem;
   margin-bottom: 0;
   font-size: 1em;
   /* Override nested font-size change */
@@ -2200,7 +2200,7 @@ ul.no-bullet {
 /* line 282, ../../vendor/zurb/foundation/scss/foundation/components/_type.scss */
 ol li ul,
 ol li ol {
-  margin-left: 1.25em;
+  margin-left: 1.25rem;
   margin-bottom: 0;
 }
 
@@ -7358,11 +7358,11 @@ table .actions.delete:hover {
 
 /* line 51, ../../app/assets/sass/_main.scss */
 .columns .button {
-  margin-top: 6px;
+  margin-top: 12px;
 }
 /* line 53, ../../app/assets/sass/_main.scss */
 .columns .button.small {
-  margin-top: 12px;
+  margin-top: 6px;
 }
 
 /* line 60, ../../app/assets/sass/_main.scss */
@@ -7496,4 +7496,31 @@ div#occurrences-listing-page table tbody a.occurrence-text {
 .db-query-page #query-area {
   display: none;
   min-height: 1rem;
+}
+
+/* line 155, ../../app/assets/sass/_main.scss */
+#property-distribution-listing th, #property-distribution-listing td {
+  text-align: center;
+}
+/* line 160, ../../app/assets/sass/_main.scss */
+#property-distribution-listing th.category,
+#property-distribution-listing td.category-name {
+  min-width: 270px;
+  text-align: left;
+}
+/* line 165, ../../app/assets/sass/_main.scss */
+#property-distribution-listing th.category span {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 50%;
+}
+
+/* line 4, ../../app/assets/sass/_menu.scss */
+.top-bar-section ul li.active > a, .top-bar-section ul li.active > a:hover {
+  background-color: #f39039;
+}
+/* line 9, ../../app/assets/sass/_menu.scss */
+.top-bar-section ul li.active-child > a, .top-bar-section ul li.active-child > a:hover {
+  background-color: #9e5412;
 }

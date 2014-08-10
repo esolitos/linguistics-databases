@@ -75,6 +75,82 @@ class QueryController extends \DoubleObjectController {
       ->withMessages(['Query executed (I\'m joking!)']);
   }
   
+  
+  public function anyPropertyDistribution($verb=FALSE)
+  {
+    $this->view_data['page_title'] = 'Occurrences by Object Position';
+    $this->view_data['page_description'] = 'In this page you can observe the distribution of the properties on the objects';
+    
+    $this->view_data['properties'] = ObjectProperty::allForSelect();
+    $this->view_data['categories'] = OccurrenceCategory::allForSelect();
+    $this->view_data['objectType'] = [
+      'IND' => "Indirect",
+      'DIR' => "Direct",
+      'FIR' => "First",
+      'SEC' => "Second",
+    ];
+    $this->view_data['selectedCategs'] = [];
+    $this->view_data['selectedSpeakers'] = [];
+    $this->view_data['objectClass'] = '';
+    
+    if ( $verb ) {
+      $this->view_data['selectedVerb'] = $verb;
+    }
+    
+    if ( Request::isMethod('POST') && Input::has('obj_type') )
+    {
+      $selectedProps = ObjectProperty::all()->lists('id');
+      $selectedCategs = Input::get('categories');
+      $selectedSpeakers = Input::get('speaker');
+
+      $object['type'] = Input::get('obj_type');
+      $object['key'] = 'type';
+
+      if ( in_array($object['type'], ['FIR', 'SEC']) )
+      {
+        $object['key'] = 'position';
+        $object['type'] = ($object['type'] === 'FIR') ? 1 : 2;
+      }
+
+      $result = [];
+      foreach ($selectedProps as $propertyID) {
+        $query = Occurrence::whereHas('properties', function($query) use($propertyID, $object){
+          $query->where($object['key'], '=', $object['type'])->where('property_id', '=', $propertyID);
+        });
+        
+        if ( $verb ) {
+          $query->where('verb', 'LIKE', $this->escapeLike($verb));
+        }
+        if ( !empty($selectedSpeakers) ) {
+          $query->whereIn('speaker', (array)$selectedSpeakers);
+        }
+        
+        if ( !empty($selectedCategs) ) {
+          $query->whereIn('category_id', $selectedCategs);
+        }
+        
+        $query->groupBy('category_id')
+          ->remember(60*24);
+        
+        $query->get(['category_id', DB::raw('COUNT(*) as count')])
+          ->map(function($item) use(&$result, $propertyID) {
+            $result[$item->category_id][$propertyID] = $item->count;
+          });
+      }
+    
+      $this->view_data['distribution'] = $result;
+      $this->view_data['selectedCategs'] = $selectedCategs;
+      $this->view_data['selectedSpeakers'] = (array)$selectedSpeakers;
+      $this->view_data['objectClass'] = Input::get('obj_type');
+    }
+    
+    return $this->makeView('DoubleObject.Query.Statics.propertyDistribution');
+  }
+  
+  
+  /**
+   * Routes the requests for the static queries
+   */
   public function anyStatic($query_id)
   {
     switch ($query_id) {
@@ -119,8 +195,8 @@ class QueryController extends \DoubleObjectController {
       $object_pos = Input::get('obj_pos');
       $object_type = Input::get('obj_type');
       
-      $objectIDs = CategoryObject::remember(360)->where('type', '=', $object_type)->lists('id');
-      $categoryIDs = OccurrenceCategory::remember(360)->whereIn($object_pos.'_object_id', $objectIDs)->lists('id');
+      $objectIDs = CategoryObject::where('type', '=', $object_type)->remember(360)->lists('id');
+      $categoryIDs = OccurrenceCategory::whereIn($object_pos.'_object_id', $objectIDs)->remember(360)->lists('id');
       
       $this->view_data['page_description'] = "Occurrences in which the <strong>{$object_type}</strong> object is in the <strong>{$object_pos}</strong> position";
       
@@ -255,5 +331,10 @@ class QueryController extends \DoubleObjectController {
     }
     
     return FALSE;
+  }
+
+  public function escapeLike($str)
+  {
+    return str_replace(['%', '_'], ['\%', '\_'], $str);
   }
 }

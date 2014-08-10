@@ -1,0 +1,13 @@
+.top-bar-section ul {
+  
+  li.active > a {
+    &, &:hover {
+      background-color: $primary-color;
+    }
+  }
+  li.active-child > a {
+    &, &:hover {
+      background-color: $primary-color-dark;
+    }
+  }
+}
