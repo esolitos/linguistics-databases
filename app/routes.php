@@ -49,6 +49,8 @@ Route::group(array('before' => 'auth'), function()
 
   Route::get('double-object/occurrence/{id}/object-properties', ['as'=>'occurrence.objectProperties', 'uses'=>'OccurrenceController@editObjectProperties']);
   Route::post('double-object/occurrence/{id}/object-properties', ['as'=>'occurrence.objectProperties', 'uses'=>'OccurrenceController@updateObjectProperties']);
+
+  Route::get('double-object/verbs', ['as'=>'occurrence.objectProperties', 'uses'=>'OccurrenceController@verbs']);
   
   Route::controller('double-object/statistics','StatisticsController');
   Route::controller('double-object/query','QueryController');

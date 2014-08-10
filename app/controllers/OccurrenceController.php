@@ -206,6 +206,20 @@ class OccurrenceController extends \DoubleObjectController {
   }
   
   
+  public function verbs()
+  {
+    $this->view_data['page_title'] = "Occurrence Verbs";
+    $this->view_data['page_description'] = "Those are all the verbs prenset in the DB.";
+    
+    $this->view_data['verbs'] = Occurrence::remember(60*24)
+      ->groupBy('verb')->get(['verb', DB::raw('COUNT(*) as count')])
+      ->toArray();
+    
+    $this->view_data['extra_scripts'][100] = "/javascript/occurrence.datatables-verbs.js";
+    return $this->withDataTables()->makeView('DoubleObject.Occurrence.verbs');
+  }
+  
+  
   private function insertProperties($proderty_ids, $type)
   {
     return $this->propStorage[$type] += $proderty_ids;
