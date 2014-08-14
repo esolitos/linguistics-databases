@@ -136,6 +136,12 @@ class QueryController extends \DoubleObjectController {
           ->map(function($item) use(&$result, $propertyID) {
             $result[$item->category_id][$propertyID] = $item->count;
           });
+          
+        Occurrence::groupBy('category_id')->remember(60*24)
+          ->get(['category_id', DB::raw('COUNT(*) as count')])
+          ->map(function($item) use(&$result) {
+              $result[$item->category_id]['total'] = $item->count;
+          });
       }
     
       $this->view_data['distribution'] = $result;
