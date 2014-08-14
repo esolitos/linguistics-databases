@@ -49,16 +49,18 @@
             @foreach($properties as $propertyName)
               <th>{{ $propertyName }}</th>
             @endforeach
+            <th><strong>Occurrences</strong></th>
           </tr>
         </thead>
         <tbody>
           @foreach($categories as $catID => $categoryName )
             @if( isset($distribution[$catID]) )
             <tr class="category cat-{{$catID}}">
-              <td class="category-name">{{ $categoryName }}&nbsp;<em>({{ $distribution['total'][$catID] }})</em></td>
+              <td class="category-name">{{ $categoryName }}</td>
               @foreach($properties as $propID=>$propertyName)
                 <td class="property-count property-{{$propID}}">{{ $distribution[$catID][$propID] or '&bull;' }}</td>
               @endforeach
+              <td><em>{{ $distribution['total'][$catID] }}</em></td>
             </tr>
             @endif
           @endforeach
