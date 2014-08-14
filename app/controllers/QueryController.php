@@ -114,19 +114,23 @@ class QueryController extends \DoubleObjectController {
 
       $result = [];
       foreach ($selectedProps as $propertyID) {
+        $totals = Occurrence::groupBy('category_id');
         $query = Occurrence::whereHas('properties', function($query) use($propertyID, $object){
           $query->where($object['key'], '=', $object['type'])->where('property_id', '=', $propertyID);
         });
         
         if ( $verb ) {
           $query->where('verb', 'LIKE', $this->escapeLike($verb));
+          $totals->where('verb', 'LIKE', $this->escapeLike($verb));
         }
         if ( !empty($selectedSpeakers) ) {
           $query->whereIn('speaker', (array)$selectedSpeakers);
+          $totals->whereIn('speaker', (array)$selectedSpeakers);
         }
         
         if ( !empty($selectedCategs) ) {
           $query->whereIn('category_id', $selectedCategs);
+          $totals->whereIn('category_id', $selectedCategs);
         }
         
         $query->groupBy('category_id')
@@ -135,13 +139,15 @@ class QueryController extends \DoubleObjectController {
         $query->get(['category_id', DB::raw('COUNT(*) as count')])
           ->map(function($item) use(&$result, $propertyID) {
             $result[$item->category_id][$propertyID] = $item->count;
-          });
+          }
+        );
           
-        Occurrence::groupBy('category_id')->remember(60*24)
+        $totals->remember(60*24)
           ->get(['category_id', DB::raw('COUNT(*) as count')])
           ->map(function($item) use(&$result) {
               $result['total'][$item->category_id] = $item->count;
-          });
+          }
+        );
       }
     
       $this->view_data['distribution'] = $result;
