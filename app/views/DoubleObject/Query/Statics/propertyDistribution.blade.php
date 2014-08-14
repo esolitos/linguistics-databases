@@ -55,7 +55,7 @@
           @foreach($categories as $catID => $categoryName )
             @if( isset($distribution[$catID]) )
             <tr class="category cat-{{$catID}}">
-              <td class="category-name">{{ $categoryName }}<small>({{ $distribution[$catID]['total'] }})</small></td>
+              <td class="category-name">{{ $categoryName }}&nbsp;<em>({{ $distribution['total'][$catID] }})</em></td>
               @foreach($properties as $propID=>$propertyName)
                 <td class="property-count property-{{$propID}}">{{ $distribution[$catID][$propID] or '&bull;' }}</td>
               @endforeach
