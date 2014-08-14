@@ -136,16 +136,21 @@ class QueryController extends \DoubleObjectController {
         $query->groupBy('category_id')
           ->remember(60*24);
         
-        $query->get(['category_id', DB::raw('COUNT(*) as count')])
-          ->map(function($item) use(&$result, $propertyID) {
-            $result[$item->category_id][$propertyID] = $item->count;
-          }
-        );
-          
         $totals->remember(60*24)
           ->get(['category_id', DB::raw('COUNT(*) as count')])
           ->map(function($item) use(&$result) {
               $result['total'][$item->category_id] = $item->count;
+          }
+        );
+        
+        $query->get(['category_id', DB::raw('COUNT(*) as count')])
+          ->map(function($item) use(&$result, $propertyID) {
+            if ( $item->count ) {
+              $percent = round(($result['total'][$item->category_id] / 100) * $item->count, 2);
+              $result[$item->category_id][$propertyID] = "{$item->count}&nbsp;<em>({$percent}%<)/em>";
+            } else {
+              $result[$item->category_id][$propertyID] = FALSE;
+            }
           }
         );
       }
