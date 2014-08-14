@@ -147,7 +147,7 @@ class QueryController extends \DoubleObjectController {
           ->map(function($item) use(&$result, $propertyID) {
             if ( $item->count ) {
               $percent = round(($result['total'][$item->category_id] / 100) * $item->count, 2);
-              $result[$item->category_id][$propertyID] = "{$item->count}&nbsp;<em>({$percent}%<)/em>";
+              $result[$item->category_id][$propertyID] = "{$item->count}<br><em>({$percent}%)</em>";
             } else {
               $result[$item->category_id][$propertyID] = FALSE;
             }
