@@ -57,9 +57,26 @@
             @if( isset($distribution[$catID]) )
             <tr class="category cat-{{$catID}}">
               <td class="category-name">{{ $categoryName }}</td>
+
               @foreach($properties as $propID=>$propertyName)
-                <td class="property-count property-{{$propID}}">{{ $distribution[$catID][$propID] or '&bull;' }}</td>
+                <td class="property-count property-{{$propID}}">
+                @if( !empty($distribution[$catID][$propID]) )
+                  <?php $query_args = [
+                    'category'    => $catID,
+                    'property'    => $propID,
+                    'object'      => $objectClass,
+                    'speaker'     => implode(',', $selectedSpeakers),
+                  ]; ?>
+                  <a href="{{ action('QueryController@getPropertyDistributionOccurrences') .'?'. http_build_query($query_args) }}">
+                    {{ $distribution[$catID][$propID]['count'] }}<br/>
+                    <em>{{ $distribution[$catID][$propID]['percent'] }}%</em>
+                  </a>
+                @else
+                   &bull;
+                @endif
+                </td>
               @endforeach
+              
               <td><em>{{ $distribution['total'][$catID] }}</em></td>
             </tr>
             @endif

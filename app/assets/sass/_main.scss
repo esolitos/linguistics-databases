@@ -151,6 +151,7 @@ div#occurrences-listing-page {
     
 }
 
+
 #property-distribution-listing {
   th, td {
     text-align: center;
@@ -167,5 +168,14 @@ div#occurrences-listing-page {
     margin:0;
     padding:0;
     width: 50%;
+  }
+}
+
+#property-distribution-occurrence-listing {
+  @extend #property-distribution-listing;
+
+  td[rowspan='2'],
+  tr:nth-of-type(even) td {
+    border-bottom: 1px solid darken($table-even-row-bg, 5);
   }
 }

@@ -93,7 +93,7 @@ class QueryController extends \DoubleObjectController {
     $this->view_data['selectedSpeakers'] = [];
     $this->view_data['objectClass'] = '';
     
-    if ( $verb ) {
+    if ( $verb && strcasecmp('all', $verb) != 0 ) {
       $this->view_data['selectedVerb'] = $verb;
     }
     
@@ -112,7 +112,7 @@ class QueryController extends \DoubleObjectController {
         $object['type'] = ($object['type'] === 'FIR') ? 1 : 2;
       }
 
-      $result = [];
+      $distribution = [];
       foreach ($selectedProps as $propertyID) {
         $totals = Occurrence::groupBy('category_id');
         $query = Occurrence::whereHas('properties', function($query) use($propertyID, $object){
@@ -138,25 +138,26 @@ class QueryController extends \DoubleObjectController {
         
         $totals->remember(60*24)
           ->get(['category_id', DB::raw('COUNT(*) as count')])
-          ->map(function($item) use(&$result) {
-              $result['total'][$item->category_id] = $item->count;
+          ->map(function($item) use(&$distribution) {
+              $distribution['total'][$item->category_id] = $item->count;
           }
         );
         
         $query->get(['category_id', DB::raw('COUNT(*) as count')])
-          ->map(function($item) use(&$result, $propertyID) {
+          ->map(function($item) use(&$distribution, $propertyID) {
             if ( $item->count ) {
-              $percent = round(($item->count / $result['total'][$item->category_id]) *100, 2);
+              $percent = round(($item->count / $distribution['total'][$item->category_id]) *100, 1);
               
-              $result[$item->category_id][$propertyID] = "{$item->count}<br><em>({$percent}%)</em>";
+              $distribution[$item->category_id][$propertyID]['count'] = $item->count;
+              $distribution[$item->category_id][$propertyID]['percent'] = $percent;
             } else {
-              $result[$item->category_id][$propertyID] = FALSE;
+              $distribution[$item->category_id][$propertyID] = FALSE;
             }
           }
         );
       }
     
-      $this->view_data['distribution'] = $result;
+      $this->view_data['distribution'] = $distribution;
       $this->view_data['selectedCategs'] = $selectedCategs;
       $this->view_data['selectedSpeakers'] = (array)$selectedSpeakers;
       $this->view_data['objectClass'] = Input::get('obj_type');
@@ -165,6 +166,45 @@ class QueryController extends \DoubleObjectController {
     return $this->makeView('DoubleObject.Query.Statics.propertyDistribution');
   }
   
+  public function getPropertyDistributionOccurrences()
+  {
+    $this->view_data['page_title'] = 'Occurrences by Object Position';
+    $this->view_data['page_description'] = 'In this page you can observe the distribution of the properties on the objects';
+    
+    
+    $this->view_data['properties'] = ObjectProperty::allForSelect();
+    $this->view_data['categories'] = OccurrenceCategory::allForSelect();
+    $this->view_data['selectedSpeakers'] = [];
+    
+    
+    $selCategory  = Input::get('category');
+    $selProperty  = Input::get('property');
+    $selSpeakers  = (Input::get('speaker')) ? explode(',',Input::get('speaker')) : [];
+
+    $selObjType   = Input::get('object');
+    $selObjKey    = 'type';
+
+    if ( in_array($selObjType, ['FIR', 'SEC']) )
+    {
+      $selObjKey = 'position';
+      $selObjType = (strcasecmp($selObjType, 'FIR')==0) ? 1 : 2;
+    }
+    
+    $query = Occurrence::whereHas('properties', function($query) use($selProperty, $selObjKey, $selObjType){
+      $query->where($selObjKey, '=', $selObjType)->where('property_id', '=', $selProperty);
+    });
+    
+    $query->where('category_id', '=' ,$selCategory);
+    
+    if ( !empty($selSpeakers) ) {
+      $query->whereIn('speaker', $selSpeakers);
+    }
+
+    $this->view_data['occurrences'] = $query;
+    $this->view_data['objectType'] = Input::get('object');
+    
+    return $this->makeView('DoubleObject.Query.Statics.propertyDistributionOccurrences');
+  }
   
   /**
    * Routes the requests for the static queries
