@@ -4,15 +4,31 @@
   <div class="small-12 columns">
     <h3 class="subheader">Static Queries</h3>
     <p>Those queryes are fixed and it is only possible to change some small parameters, keep in mind that the results are updated only once every 6 hours.</p>
-    <ul class="square">
-      <li>Object Type/Position: {{ link_to_action('QueryController@anyStatic', 'View &rarr;', ['objects-position'], ['class'=>'tiny button radius']) }}</li>
-      <li>Related Properties: {{ link_to_action('QueryController@anyStatic', 'View &rarr;', ['related-properties'], ['class'=>'tiny button radius']) }}</li>
-      <li>Same Properties: {{ link_to_action('QueryController@anyStatic', 'View &rarr;', ['same-property'], ['class'=>'tiny button radius']) }}</li>
-    </ul>
-    <h3 class="subheader">Dynamic Queries</h3>
+
+    <table style="width:100%" border="0" cellspacing="0" cellpadding="5">
+      <thead>
+        <tr><th>Type</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Object Type/Position<br><small>short decription</small></td>
+          <td>{{ link_to_action('QueryController@anyStatic', 'Run', ['objects-position'], ['class'=>'tiny button radius']) }}</td>
+        </tr>
+        <tr>
+          <td>Related Properties<br><small>short decription</small></td>
+          <td>{{ link_to_action('QueryController@anyStatic', 'Run', ['related-properties'], ['class'=>'tiny button radius']) }}</td>
+        </tr>
+        <tr>
+          <td>Same Properties<br><small>short decription</small></td>
+          <td>{{ link_to_action('QueryController@anyStatic', 'Run', ['same-property'], ['class'=>'tiny button radius']) }}</td>
+        </tr>
+      </tbody>
+    </table>
+    {{-- <h3 class="subheader">Dynamic Queries</h3>
+    <p>
     <ul class="button-group">
       <li>{{ link_to_action('QueryController@getBuild', 'New Dynamic Query', [], ['class'=>'button']) }}</li>
-    </ul>
+    </ul> --}}
   </div>
   
   <div class="small-12 columns">

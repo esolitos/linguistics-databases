@@ -331,15 +331,17 @@ class QueryController extends \DoubleObjectController {
     }
     else {
       $propertyID = Input::get('property');
+      $reverseSearch = Input::get('reverse');
       $propName = ObjectProperty::find($propertyID)->name;
-      
+
+      $op = empty($reverseSearch) ? '>=' : '<';
       $occurrences = Occurrence::with('properties')
-        ->whereHas('properties', function($query) use($propertyID){
+        ->whereHas('properties', function($query) use($propertyID, $reverseSearch){
           $query->where('type', '=', 'IND')->where('property_id', '=', $propertyID);
-        })
-        ->whereHas('properties', function($query) use($propertyID){
+        }, $op)
+        ->whereHas('properties', function($query) use($propertyID, $reverseSearch){
           $query->where('type', '=', 'DIR')->where('property_id', '=', $propertyID);
-        })
+        }, $op)
         ->get();
         
       $this->view_data['occurrences'] = $occurrences;

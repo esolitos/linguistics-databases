@@ -52,4 +52,16 @@ class Occurrence extends Ardent {
   {
     return $this->hasMany('OccurrenceObjectProperty')->where('type', 'LIKE', $type);
   }
+
+  public function directObjProps()
+  {
+    return $this->hasMany('OccurrenceObjectProperty')->where('type', '=', 'DIR');
+  }
+  
+  public function indirectObjProps()
+  {
+    return $this->hasMany('OccurrenceObjectProperty')->where('type', '=', 'IND');
+  }
+  
+  
 }
