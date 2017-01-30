@@ -77,7 +77,14 @@
                 </td>
               @endforeach
               
-              <td><em>{{ $distribution['total'][$catID] }}</em></td>
+              <td>
+                <?php $query_args = [
+                        'category'    => $catID,
+                        'object'      => $objectClass,
+                        'speaker'     => implode(',', $selectedSpeakers),
+                ]; ?>
+                <em><a href="{{ action('QueryController@getPropertyDistributionOccurrences') .'?'. http_build_query($query_args) }}">View all:<br>{{ $distribution['total'][$catID] }}</a></em>
+              </td>
             </tr>
             @endif
           @endforeach

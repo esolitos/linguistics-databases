@@ -189,12 +189,16 @@ class QueryController extends \DoubleObjectController {
       $selObjKey = 'position';
       $selObjType = (strcasecmp($selObjType, 'FIR')==0) ? 1 : 2;
     }
+
+    $query = Occurrence::where('category_id', '=' ,$selCategory);
+
+    if ( $selProperty ) {
+      $query->whereHas('properties', function ($query) use ($selProperty, $selObjKey, $selObjType) {
+        $query->where($selObjKey, '=', $selObjType)
+          ->where('property_id', '=', $selProperty);
+      });
+    }
     
-    $query = Occurrence::whereHas('properties', function($query) use($selProperty, $selObjKey, $selObjType){
-      $query->where($selObjKey, '=', $selObjType)->where('property_id', '=', $selProperty);
-    });
-    
-    $query->where('category_id', '=' ,$selCategory);
     
     if ( !empty($selSpeakers) ) {
       $query->whereIn('speaker', $selSpeakers);
