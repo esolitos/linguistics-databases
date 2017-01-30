@@ -122,7 +122,6 @@ return array(
 
     'Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider',
     'Menu\MenuServiceProvider',
-    'VivifyIdeas\Acl\AclServiceProvider',
     'Stevenmaguire\Foundation\FoundationServiceProvider',
   ),
 
@@ -192,7 +191,6 @@ return array(
     
     'Ardent'          => 'LaravelBook\Ardent\Ardent',
     'Menu'            => 'Menu\Menu',
-    'Acl'             => 'VivifyIdeas\Acl\Facades\Acl',
   ),
 
 );
