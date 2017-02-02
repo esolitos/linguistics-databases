@@ -1,6 +1,6 @@
 <?php
 
-class StatisticsController extends \DoubleObjectController {
+class StatisticsController extends \DoubleObjectBase {
 
 	/**
 	 * Display a listing of the resource.
@@ -63,5 +63,15 @@ class StatisticsController extends \DoubleObjectController {
     
     return $this->makeView('DoubleObject.Statistics.index');
 	}
+
+    /**
+     * Checks if the user has access to this class.
+     *
+     * @return bool
+     */
+    protected function authorityControl()
+    {
+        return Auth::check();
+    }
 
 }

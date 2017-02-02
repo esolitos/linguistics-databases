@@ -6,29 +6,51 @@
     <table class="defined-categories" border="0" cellspacing="0" cellpadding="5">
       <thead>
         <tr>
-          <th>First Object</th>
-          <th>Second Object</th>
-          <th>Creator</th>
-          <th class="actions">&nbsp;</th>
-          <th class="actions">&nbsp;</th>
-          <th class="actions">&nbsp;</th>
+          <th>1<sup>st</sup> Object</th>
+          <th>2<sup>nd</sup> Object</th>
+          <th>User</th>
+          @if($can->viewOccurrences)
+            <th class="actions"><abbr title="View Occurrences">List</span></th>
+          @endif
+          @if( $can->edit )
+            <th class="actions">Edit</th>
+          @endif
+          @if( $can->delete )
+            <th class="actions">Delete</th>
+          @endif
         </tr>
       </thead>
       <tbody>
       @foreach(OccurrenceCategory::with('firstObj', 'secondObj')->get() as $cat)
-        <?php $obj1 = $cat->firstObj ?>
         <tr class="category-{{$cat->id}} {{($cat->id%2) ? 'odd' : 'even'}}">
-          <td><strong>{{$obj1->type}}</strong> <em>{{$obj1->form}} {{$obj1->declination}}</em> <small>{{($obj1->has_preposition) ? '+Prep.' : ''}}</small></td>
-          @if( $cat->secondObj )
-            <?php $obj2 = $cat->secondObj ?>
-            <td><strong>{{$obj2->type}}</strong> <em>{{$obj2->form}} {{$obj2->declination}}</em> <small>{{($obj2->has_preposition) ? '+Prep.' : ''}}</small></td>
-          @else
-            <td>-</td>
-          @endif
+          <td>
+            <strong>{{$cat->firstObj->type}}</strong>
+            <em>{{$cat->firstObj->form}} {{$cat->firstObj->declination}}</em>
+            @if($cat->firstObj->has_preposition)
+              <small>+Prep.</small>
+            @endif
+          </td>
+          <td>
+            @if( $cat->secondObj )
+              <strong>{{$cat->secondObj->type}}</strong>&nbsp;
+              <em>{{$cat->secondObj->form}} {{$cat->secondObj->declination}}</em>&nbsp;
+              @if($cat->secondObj->has_preposition)
+                <small>+Prep.</small>
+              @endif
+            @else
+              &dash;
+            @endif
+          </td>
           <td>{{ $cat->author->username }}</td>
-          <td>{{ link_to_route('category.occurrences', '', [$cat->id], ['class'=>'fi-list-bullet actions view-occurrences', 'title'=>"View Occurrences"]) }} </td>
-          <td>{{ link_to_action("CategoryController@edit", '', [$cat->id], ['class'=>'fi-pencil actions edit', 'title'=>"Edit"]) }}</td>
-          <td>{{ link_to_route("category.delete", '', [$cat->id], ['class'=>'fi-trash actions delete', 'title'=>"Delete"]) }}</td>
+          @if($can->viewOccurrences)
+            <td>{{ link_to_route('category.occurrences', '', [$cat->id], ['class'=>'fi-list-bullet actions view-occurrences', 'title'=>"View Occurrences"]) }}</td>
+          @endif
+          @if( $can->edit )
+            <td>{{ link_to_action("CategoryController@edit", '', [$cat->id], ['class'=>'fi-pencil actions edit', 'title'=>"Edit"]) }}</td>
+          @endif
+          @if( $can->delete )
+            <td>{{ link_to_route("category.delete", '', [$cat->id], ['class'=>'fi-trash actions delete', 'title'=>"Delete"]) }}</td>
+          @endif
         </tr>
       @endforeach
       </tbody>

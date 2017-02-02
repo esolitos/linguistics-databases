@@ -1,6 +1,6 @@
 <?php
 
-class OccurrenceController extends \DoubleObjectController {
+class OccurrenceController extends \DoubleObjectBase {
 
   private $propStorage = [
     'IND' => [],
@@ -255,4 +255,36 @@ class OccurrenceController extends \DoubleObjectController {
     return count($property_rows);
   }
 
+    /**
+     * Checks if the user has access to this class.
+     *
+     * @return bool
+     */
+    protected function authorityControl($action)
+    {
+        try {
+            $action = $this->normalizeResourceCrudAction($action);
+
+            return Authority::can($action, __CLASS__);
+
+        } catch (UnexpectedValueException $e) {
+            // Only catch the exception if action is a known method.
+            if ( !is_callable([$this, $action]) ) {
+                throw $e;
+            }
+        }
+
+        $methods_perms = [
+            'verbs' => [Permission::ACTION_R, 'Occurrence'],
+            'getBy' => [Permission::ACTION_R, 'Occurrence'],
+            'getByCategory' => [Permission::ACTION_R, 'Occurrence'],
+            'editObjectProperties' => [Permission::ACTION_U, 'Occurrence'],
+            'updateObjectProperties' => [Permission::ACTION_U, 'Occurrence'],
+        ];
+        if ( isset($methods_perms[$action]) && is_array($methods_perms[$action]) ) {
+            return Authority::can($methods_perms[$action][0], $methods_perms[$action][1]);
+        }
+
+        return false;
+    }
 }

@@ -13,24 +13,9 @@
 
 $app = new Illuminate\Foundation\Application;
 
-/*
-|--------------------------------------------------------------------------
-| Detect The Application Environment
-|--------------------------------------------------------------------------
-|
-| Laravel takes a dead simple approach to your application environments
-| so you can just specify a machine name for the host that matches a
-| given environment, then we will automatically detect it for you.
-|
-*/
-
-$env = $app->detectEnvironment(array(
-
-	'local' => array('*.local', '*.lan'),
-	'testing' => array('serenity'),
-	'production' => array('tardis'),
-
-));
+$env = $app->detectEnvironment(function () {
+    return $_SERVER['APP_ENV'] ?: 'production';
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +27,6 @@ $env = $app->detectEnvironment(array(
 | may do so within the paths.php file and they will be bound here.
 |
 */
-
 $app->bindInstallPaths(require __DIR__.'/paths.php');
 
 /*
@@ -55,10 +39,7 @@ $app->bindInstallPaths(require __DIR__.'/paths.php');
 | from the actual running of the application with a given request.
 |
 */
-
-$framework = $app['path.base'].
-                 '/vendor/laravel/framework/src';
-
+$framework = $app['path.base'].'/vendor/laravel/framework/src';
 require $framework.'/Illuminate/Foundation/start.php';
 
 /*
@@ -71,5 +52,4 @@ require $framework.'/Illuminate/Foundation/start.php';
 | from the actual running of the application and sending responses.
 |
 */
-
 return $app;

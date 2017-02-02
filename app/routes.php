@@ -10,54 +10,126 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+//Auth::loginUsingId(4);
+
 Route::pattern('id', '[0-9]+');
 
+Route::get('/', [
+    "as"   => "home",
+    "uses" => 'HomeController@index',
+]);
 
-Route::get('/', 'HomeController@index');
 Route::controller('password', 'RemindersController');
 
-Route::group(array('prefix' => 'user'), function() {
-  Route::get("login", [ "as"   => "user.login", "uses" => "UserController@index" ]);
-  Route::post("login", [ "as"   => "user.login", "uses" => "UserController@login" ]);
-  
-  Route::any("logout", [ "as"   => "user.logout", "uses" => "UserController@logout" ]);
+Route::group([ 'prefix' => 'user' ], function () {
 
-  Route::get("sign-up", [ "as"   => "user.register", "uses" => "UserController@signUp" ]);
-  Route::post("sign-up", [ "as"   => "user.register", "uses" => "UserController@register" ]);
+    Route::get("login", [ "as" => "user.login", "uses" => "UserController@index" ]);
+
+    Route::post("login", [
+        "as"   => "user.login",
+        "uses" => "UserController@login",
+    ]);
+
+    Route::get("sign-up", [
+        "as"   => "user.register",
+        "uses" => "UserController@signUp",
+    ]);
+    Route::post("sign-up", [
+        "as"   => "user.register",
+        "uses" => "UserController@register",
+    ]);
 });
-
-
 
 /* Require Login for those routes */
-Route::group(array('before' => 'auth'), function()
-{
-	Route::get('user/profile', [ "as"   => "user.profile", "uses" => "UserController@showProfile" ] );
+Route::group([ 'before' => 'access' ], function () {
+
+    Route::group([ 'prefix' => 'user' ], function () {
+        Route::any("logout", [
+            "as"   => "user.logout",
+            "uses" => "UserController@logout",
+        ]);
+        Route::get('profile', [
+            "as"   => "user.profile",
+            "uses" => "UserController@showProfile",
+        ]);
+    });
+
+    /*
+     * DATABASE: Double Object
+     */
+    Route::group([ 'prefix' => 'o2j' ], function () {
+
+        Route::get('/', 'DoubleObjectController@index');
+
+        Route::resource('category', 'CategoryController');
+        Route::get('category/{id}/delete', [
+            'as'   => 'category.delete',
+            'uses' => 'CategoryController@destroy',
+        ]);
 
 
-  Route::get('double-object', 'DoubleObjectController@index');
+        Route::resource('occurrence', 'OccurrenceController');
+        Route::get('occurrence/{id}/delete', [
+            'as'   => 'occurrence.delete',
+            'uses' => 'OccurrenceController@destroy',
+        ]);
+        Route::get('occurrence/by/{filter}/{value}', [
+            'as'   => 'occurrence.get-by',
+            'uses' => 'OccurrenceController@getBy',
+        ]);
+        Route::get('occurrence/{id}/object-properties', [
+            'as'   => 'occurrence.objectProperties',
+            'uses' => 'OccurrenceController@editObjectProperties',
+        ]);
 
-  Route::resource('double-object/category', 'CategoryController');
-  Route::get('double-object/category/{id}/delete', ['as'=>'category.delete', 'uses'=>'CategoryController@destroy']);
-  
-  Route::resource('double-object/occurrence', 'OccurrenceController');
-  Route::get('double-object/occurrence/{id}/delete', ['as'=>'occurrence.delete', 'uses'=>'OccurrenceController@destroy']);
-  Route::get('double-object/occurrence/by/{filter}/{value}', ['as'=>'occurrence.get-by', 'uses'=>'OccurrenceController@getBy']);
-  Route::get('double-object/category/{value}/occurrences', ['as'=>'category.occurrences', 'uses'=>'OccurrenceController@getByCategory']);
-  
-  Route::resource('double-object/object-property', 'ObjectPropertyController');
-  Route::get('double-object/object-property/{id}/delete', ['as'=>'objectProperty.delete', 'uses'=>'ObjectPropertyController@destroy']);
+        Route::post('occurrence/{id}/object-properties', [
+            'as'   => 'occurrence.objectProperties',
+            'uses' => 'OccurrenceController@updateObjectProperties',
+        ]);
 
-  Route::get('double-object/occurrence/{id}/object-properties', ['as'=>'occurrence.objectProperties', 'uses'=>'OccurrenceController@editObjectProperties']);
-  Route::post('double-object/occurrence/{id}/object-properties', ['as'=>'occurrence.objectProperties', 'uses'=>'OccurrenceController@updateObjectProperties']);
+        Route::get('category/{value}/occurrences', [
+            'as'   => 'category.occurrences',
+            'uses' => 'OccurrenceController@getByCategory',
+        ]);
 
-  Route::get('double-object/verbs', ['as'=>'verbs.list', 'uses'=>'OccurrenceController@verbs']);
-  
-  Route::controller('double-object/statistics','StatisticsController');
-  Route::controller('double-object/query','QueryController');
-  
+        Route::resource('object-property', 'ObjectPropertyController');
+        Route::get('object-property/{id}/delete', [
+            'as'   => 'objectProperty.delete',
+            'uses' => 'ObjectPropertyController@destroy',
+        ]);
+
+        Route::get('verbs', [
+            'as'   => 'verbs.list',
+            'uses' => 'OccurrenceController@verbs',
+        ]);
+
+        Route::controller('statistics', 'StatisticsController');
+        Route::controller('query', 'QueryController');
+
+    });
+
+    /*
+     * Admin Pages
+     */
+    Route::group([ 'prefix' => 'admin' ], function () {
+
+        /*
+         * USer administration page
+         */
+        Route::group([ 'before' => 'userAdminCheck' ], function () {
+
+            Route::resource("users", 'UserAdminController');
+            Route::get('users/{id}/delete', [
+                'as'   => 'user.delete',
+                'uses' => 'UserAdminController@destroy',
+            ]);
+
+        });
+    });
+
 });
 
 
 
-  // Temporary Route
-  // Route::controller('migrate-old-db','MigrateOldSetupController');
+// Temporary Route
+// Route::controller('migrate-old-db','MigrateOldSetupController');

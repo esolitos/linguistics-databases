@@ -1,10 +1,9 @@
 <?php
 
-return array(
-
-  'providers' => append_config(array(
-    'Way\Generators\GeneratorsServiceProvider',
-    'Aheissenberger\Foundation\FoundationServiceProvider',
-  ))
-
-);
+return [
+    'providers' => append_config([
+        'Way\Generators\GeneratorsServiceProvider',
+        'Aheissenberger\Foundation\FoundationServiceProvider',
+        'Conner\Kint\KintServiceProvider',
+    ]),
+];

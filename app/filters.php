@@ -11,37 +11,18 @@
 |
 */
 
-App::before(function($request)
-{
-	//
+
+App::before(function ($request) {
+    //
+});
+
+App::after(function ($request, $response) {
+    //
 });
 
 
-App::after(function($request, $response)
-{
-	//
-});
-
-/*
-|--------------------------------------------------------------------------
-| Authentication Filters
-|--------------------------------------------------------------------------
-|
-| The following filters are used to verify that the user of the current
-| session is logged into this application. The "basic" filter easily
-| integrates HTTP Basic authentication for quick, simple checking.
-|
-*/
-
-Route::filter('auth', function()
-{
-	if (Auth::guest()) return Redirect::guest('user/login');
-});
-
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
+Route::filter('auth.basic', function () {
+    return Auth::basic();
 });
 
 /*
@@ -55,9 +36,10 @@ Route::filter('auth.basic', function()
 |
 */
 
-Route::filter('guest', function()
-{
-	if (Auth::check()) return Redirect::to('/');
+Route::filter('guest', function () {
+    if (Auth::check()) {
+        return Redirect::to('/');
+    }
 });
 
 /*
@@ -71,10 +53,46 @@ Route::filter('guest', function()
 |
 */
 
-Route::filter('csrf', function()
-{
-	if (Session::token() != Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+Route::filter('csrf', function () {
+    if (Session::token() != Input::get('_token')) {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
 });
+
+/*
+|--------------------------------------------------------------------------
+| Access Filter
+|--------------------------------------------------------------------------
+|
+| Check permission for every route.
+|
+*/
+
+Route::filter('access', function (Illuminate\Routing\Route $route, Illuminate\Http\Request $request) {
+
+    if (Auth::guest()) {
+        return Redirect::guest('user/login');
+    }
+
+    // we need this because laravel delete form sends POST request with {_method: 'DELETE'} as parameter
+    //$method = $request->has('_method') ? $request->input('_method') : $request->server('REQUEST_METHOD');
+
+    //if ( ! Authority::can($method, $route->getName())) {
+    //    App::abort(403);
+    //}
+});
+
+/*
+ *
+ */
+Route::filter('userAdminCheck', function (Illuminate\Routing\Route $route, Illuminate\Http\Request $request) {
+
+    if (Auth::guest()) {
+        return Redirect::guest('user/login');
+    }
+
+    if ( Authority::cannot(Permission::ADMINISTER, 'User')) {
+        App::abort(403);
+    }
+});
+

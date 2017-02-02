@@ -11,7 +11,7 @@ class UserController extends \BaseController {
   {
     if ( Auth::check() )
     {
-      return Redirect::route("user.profile");
+      return Redirect::route("home");
     }
 
     $this->view_data['page_title'] = "User Login";
@@ -32,7 +32,7 @@ class UserController extends \BaseController {
     {
       if (Auth::attempt( $this->getLoginCredentials(), TRUE ))
       {
-        return Redirect::route("user.profile");
+        return Redirect::route("home");
       }
   
       return Redirect::back()->withInput()->withErrors([ "password" => ["Credentials invalid."] ]);
@@ -51,7 +51,7 @@ class UserController extends \BaseController {
   {
     Auth::logout();
 
-    return Redirect::route("user.login")->withMessages(["You have signed out successfully. Goodbye!"]);
+    return Redirect::route("home")->withMessages(["You have signed out successfully. Goodbye!"]);
   }
 	
   public function showProfile()
@@ -88,4 +88,27 @@ class UserController extends \BaseController {
       "password" => Input::get("password")
     ];
   }
+
+    /**
+     * Checks if the user has access to this class.
+     *
+     * @return bool
+     */
+    protected function authorityControl($action)
+    {
+        switch ($action)
+        {
+            case 'showProfile':
+            case 'logout':
+                return Auth::check();
+
+            case 'signUp':
+                return false;
+
+            default:
+                return true;
+                break;
+
+        }
+    }
 }

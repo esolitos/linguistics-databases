@@ -1,29 +1,37 @@
 <?php
 
-class CategoryController extends \DoubleObjectController {
+class CategoryController extends \DoubleObjectBase {
 
-  public function __construct()
-  {
-    parent::__construct();
-    
-    $this->dataTableStyle = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.css";
-  }
+    /**
+     * CategoryController constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->dataTableStyle = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.css";
+    }
 
-  /**
-   * Display a listing of the resource.
-   * GET /category
-   *
-   * @return Response
-   */
-  public function index()
-  {
-    $this->view_data['page_title'] = "Categories Management";
-    $this->view_data['page_description'] = "In this page you can view, edit and delete the defined categories.";
-    
-    
-    $this->view_data['extra_scripts'][100] = "/javascript/category.datatables.js";
-    return $this->withDataTables()->makeView('DoubleObject.Category.listing');
-  }
+    /**
+     * Display a listing of the resource.
+     * GET /category
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $this->view_data['page_title'] = "Categories Management";
+        $this->view_data['page_description'] = "In this page you can view, edit and delete the defined categories.";
+
+        $this->view_data['can'] = (object) [
+            'viewOccurrences' => Authority::can(Permission::ACTION_R, 'Occurrence'),
+            'edit'            => Authority::can(Permission::ACTION_U, 'OccurrenceCategory'),
+            'delete'          => Authority::can(Permission::ACTION_D, 'OccurrenceCategory'),
+        ];
+
+        $this->view_data['extra_scripts'][100] = "/javascript/category.datatables.js";
+
+        return $this->withDataTables()->makeView('DoubleObject.Category.listing');
+    }
 
   /**
    * Show the form for creating a new resource.

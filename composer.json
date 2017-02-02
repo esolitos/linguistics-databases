@@ -23,13 +23,16 @@
         "felixkiss/uniquewith-validator": "1.0.*",
         "vespakoen/menu": "2.0.*",
         "vivify-ideas/acl": "dev-master",
-        "stevenmaguire/zurb-foundation-laravel": "dev-develop"
+        "stevenmaguire/zurb-foundation-laravel": "dev-develop",
+		"authority-php/authority-laravel": "2.3.x-dev",
+		"thomaswelton/laravel-gravatar": "~0.1"
 	},
     "require-dev": {
         "way/generators": "2.*",
         "fzaninotto/faker": "v1.3.0",
         "phpunit/phpunit": "4.1.*",
-        "esolitos/laravel-foundation": "0.1.*"
+        "esolitos/laravel-foundation": "0.1.*",
+		"rtconner/laravel-kint": "~0.0.0"
     },
 	"autoload": {
 		"classmap": [

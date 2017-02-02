@@ -1,6 +1,6 @@
 <?php
 
-class ObjectPropertyController extends \DoubleObjectController {
+class ObjectPropertyController extends \DoubleObjectBase {
 
   public function __construct()
   {

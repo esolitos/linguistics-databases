@@ -8,15 +8,26 @@
  * 
  */
 
-class QueryController extends \DoubleObjectController {
+class QueryController extends \DoubleObjectBase {
 
   public function __construct()
   {
-    $this->dataTableStyle = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.css";
-    $this->beforeFilter('csrf', array('on' => 'post'));
-    
-    parent::__construct();
+      $this->dataTableStyle = "//cdn.datatables.net/plug-ins/be7019ee387/integration/foundation/dataTables.foundation.css";
+      $this->beforeFilter('csrf', array('on' => 'post'));
+
+      parent::__construct();
   }
+
+
+    /**
+     * Checks if the user has access to this class.
+     *
+     * @return bool
+     */
+    protected function authorityControl()
+    {
+        return Authority::can(Permission::ACTION_R, 'Queries');
+    }
   
   public function getIndex()
   {
