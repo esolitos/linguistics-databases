@@ -1,6 +1,0 @@
-# Tests
-tests/.coverage
-
-# Dependencies
-composer.lock
-vendor
