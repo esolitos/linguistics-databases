@@ -709,7 +709,6 @@ class ComposerStaticInitbaa4e1dd4d7131d98bd6109ae4b8747b
         'Menu\\MenuServiceProvider' => __DIR__ . '/..' . '/vespakoen/menu/src/Menu/MenuServiceProvider.php',
         'Menu\\Traits\\Content' => __DIR__ . '/..' . '/vespakoen/menu/src/Menu/Traits/Content.php',
         'Menu\\Traits\\MenuObject' => __DIR__ . '/..' . '/vespakoen/menu/src/Menu/Traits/MenuObject.php',
-        'MigrateOldSetupController' => __DIR__ . '/../..' . '/app/controllers/MigrateOldSetupController.php',
         'Monolog\\ErrorHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ErrorHandler.php',
         'Monolog\\Formatter\\ChromePHPFormatter' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Formatter/ChromePHPFormatter.php',
         'Monolog\\Formatter\\ElasticaFormatter' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Formatter/ElasticaFormatter.php',

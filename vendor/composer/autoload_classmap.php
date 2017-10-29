@@ -454,7 +454,6 @@ return array(
     'Menu\\MenuServiceProvider' => $vendorDir . '/vespakoen/menu/src/Menu/MenuServiceProvider.php',
     'Menu\\Traits\\Content' => $vendorDir . '/vespakoen/menu/src/Menu/Traits/Content.php',
     'Menu\\Traits\\MenuObject' => $vendorDir . '/vespakoen/menu/src/Menu/Traits/MenuObject.php',
-    'MigrateOldSetupController' => $baseDir . '/app/controllers/MigrateOldSetupController.php',
     'Monolog\\ErrorHandler' => $vendorDir . '/monolog/monolog/src/Monolog/ErrorHandler.php',
     'Monolog\\Formatter\\ChromePHPFormatter' => $vendorDir . '/monolog/monolog/src/Monolog/Formatter/ChromePHPFormatter.php',
     'Monolog\\Formatter\\ElasticaFormatter' => $vendorDir . '/monolog/monolog/src/Monolog/Formatter/ElasticaFormatter.php',
