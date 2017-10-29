@@ -1,0 +1,28 @@
+{
+    "name": "stevenmaguire/zurb-foundation-laravel",
+    "description": "Build HTML form elements for Foundation 4 inside Laravel 4",
+    "authors": [
+        {
+            "name": "Steven Maguire",
+            "email": "steven@stevenmaguire.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~4.1",
+        "illuminate/session": "~4.1",
+        "illuminate/html": "~4.1"
+    },
+    "require-dev": {
+        "mockery/mockery": ">=0.8.0",
+        "illuminate/routing": "~4.1",
+        "illuminate/translation": "~4.1",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Stevenmaguire\\Foundation": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
