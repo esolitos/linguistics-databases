@@ -1,7 +1,5 @@
 /app/config/local
-/bootstrap/compiled.php
 /node_modules
-composer.phar
 .env.*.php
 .env.php
 .DS_Store
