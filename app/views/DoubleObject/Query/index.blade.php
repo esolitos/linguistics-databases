@@ -30,9 +30,4 @@
       <li>{{ link_to_action('QueryController@getBuild', 'New Dynamic Query', [], ['class'=>'button']) }}</li>
     </ul> --}}
   </div>
-  
-  <div class="small-12 columns">
-    <h5 class="subheader">Fun Fact</h5>
-    <p>Up until today I have compiled and executed <strong>{{ $executed_queries }} queries!</strong></p>
-  </div>
 @stop

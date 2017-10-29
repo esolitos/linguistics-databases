@@ -128,8 +128,3 @@ Route::group([ 'before' => 'access' ], function () {
     });
 
 });
-
-
-
-// Temporary Route
-// Route::controller('migrate-old-db','MigrateOldSetupController');
