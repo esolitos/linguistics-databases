@@ -1,6 +1,5 @@
 /app/config/local
 /bootstrap/compiled.php
-/vendor
 /node_modules
 composer.phar
 .env.*.php
