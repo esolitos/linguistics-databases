@@ -21,7 +21,7 @@
         <script>window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'UA-36459269-8');
+          gtag('config', 'UA-36459269-7');
         </script>
 
     @endif
