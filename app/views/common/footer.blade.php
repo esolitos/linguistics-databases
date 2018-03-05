@@ -15,9 +15,17 @@
     @else
 
         <script type="text/javascript" src="{{ asset("javascript/linguistics-db.min.js") }}"></script>
-        <script type="text/javascript" src="{{ asset("javascript/app.min.js") }}"></script>        
+        <script type="text/javascript" src="{{ asset("javascript/app.min.js") }}"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-36459269-8"></script>
+        <script>window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-36459269-8');
+        </script>
+
     @endif
-    
+
     @if( !empty($extra_scripts) )
       @foreach($extra_scripts as $src)
         <script type="text/javascript" src="{{ $src }}"></script>
@@ -34,9 +42,9 @@
       @endforeach
     @endif
   </div>
-  
+
   </div>
 </body>
 </html>
-  
+
 @show
