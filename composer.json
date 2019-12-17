@@ -11,10 +11,6 @@
         {
             "type": "vcs",
             "url": "git@github.com:esolitos/laravel-acl.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:esolitos/zurb-foundation-laravel.git"
         }
     ],
 	"require": {
