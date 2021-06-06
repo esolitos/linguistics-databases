@@ -1,0 +1,32 @@
+{
+    "name": "esolitos/laravel-foundation",
+    "description": "This package does not include the framework. It requires and automatical installs the official framework composer package from zurb and provides command line tools to setup foundation for development with laravel 4 and compass. Forked from: aheissenberger/foundation",
+    "type": "library",
+    "keywords": ["laravel","css","scss","framework"],
+    "homepage": "https://github.com/esolitos/laravel-foundation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andreas Heissenberger",
+            "email": "andreas.heissenberger@gmail.com"
+        },
+        {
+            "name": "Marlon esolitos",
+            "email": "esolitos@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "zurb/foundation": "4.3.2"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/console"
+        ],
+        "psr-0": {
+            "Aheissenberger\\Foundation": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
