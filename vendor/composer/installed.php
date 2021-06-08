@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'c8a3b49fb9ddd6c017701be28c9827e7e00f723e',
+    'reference' => '45adf23cb2c2457259430845ccb38d6499e4ad15',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -313,7 +313,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'c8a3b49fb9ddd6c017701be28c9827e7e00f723e',
+      'reference' => '45adf23cb2c2457259430845ccb38d6499e4ad15',
     ),
     'laravelbook/ardent' => 
     array (

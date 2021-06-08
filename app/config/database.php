@@ -21,17 +21,4 @@ return array(
 	),
 
 	'migrations' => 'migrations',
-
-	'redis' => array(
-
-		'cluster' => false,
-
-		'default' => array(
-			'host'     => getenv('LARAVEL_REDIS_HOST'),
-			'port'     => getenv('LARAVEL_REDIS_PORT'),
-			'database' => getenv('LARAVEL_REDIS_DB')
-		),
-
-	),
-
 );

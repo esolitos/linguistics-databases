@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+  php:
+    image: wodby/php:5.6
+    volumes:
+      - ./:/var/www/html
+      # - app_storage:/var/www/html/app/storage
+    environment:
+      PHP_FPM_CLEAR_ENV: 'FALSE'
+
+      LARAVEL_DEBUG: 'TRUE'
+      LARAVEL_APP_EMAIL: 'no-reply@velnic.net'
+      LARAVEL_APP_SENDER: 'Linguistics Database Bot'
+
+      LARAVEL_APP_URL: 'linguistics-db.velnic.net'
+      LARAVEL_APP_KEY: 'in5f8m2EnxaiGuMT9tp2yBdl4UMu4G2q'
+    
+      LARAVEL_DB_HOST: mariadb
+      LARAVEL_DB_DBNAME: laravel
+      LARAVEL_DB_USER: laravel
+      LARAVEL_DB_PASSWORD: laravel
+      LARAVEL_DB_CHARSET: 'utf8'
+      LARAVEL_DB_COLLATION: 'utf8_general_ci'
+
+  nginx:
+    image: wodby/nginx:1.20
+    environment:
+      NGINX_SERVER_ROOT: /var/www/html/public
+      NGINX_VHOST_PRESET: php
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8000:80
+
+  mariadb:
+    image: mariadb:10.5
+    volumes:
+      - ./docker/mariadb_init:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+      MYSQL_RANDOM_ROOT_PASSWORD: 'TRUE'
+  
+  redis:
+    image: redis:5
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+
+volumes:
+  app_storage:
+  
